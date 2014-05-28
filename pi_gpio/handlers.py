@@ -1,13 +1,16 @@
-from flask.ext import restful
+from flask.ext.restful import Resource
 
 
-class PinList(restful.Resource):
+class PinList(Resource):
 
     def get(self):
         return {'hello': 'world'}
 
 
-class PinDetail(restful.Resource):
+class PinDetail(Resource):
 
     def get(self, pin_num):
+        return {'pin': pin_num}
+
+    def put(self, pin_num):
         return {'pin': pin_num}
