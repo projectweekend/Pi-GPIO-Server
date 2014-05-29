@@ -1,4 +1,4 @@
-from flask.ext.restful import reqparse, marshal, fields
+from flask.ext.restful import fields
 from meta import BasicResource
 
 
