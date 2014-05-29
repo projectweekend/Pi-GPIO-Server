@@ -1,14 +1,14 @@
-from flask.ext.restful import Resource, reqparse, marshal, fields
+from flask.ext.restful import reqparse, marshal, fields
+from meta import BasicResource
 
 
-class Pin(Resource):
+class Pin(BasicResource):
 
-    fields = {
-        "status": fields.String
-    }
-
-    def response(self, data, code):
-        return marshal(data, self.fields), code
+    def __init__(self):
+        super(Pin, self).__init__()
+        self.fields = {
+            "status": fields.String
+        }
 
 
 class PinList(Pin):
@@ -24,3 +24,6 @@ class PinDetail(Pin):
 
     def put(self, pin_num):
         return {'pin': pin_num}
+
+    def patch(self, pin_num):
+        pass
