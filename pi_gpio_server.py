@@ -1,4 +1,4 @@
-from pi_gpio import app
+from pi_gpio import app, socketio
 
 
 HOST = app.config['HOST']
@@ -7,4 +7,4 @@ DEBUG_MODE = app.config['DEBUG']
 
 
 if __name__ == '__main__':
-    app.run(debug=DEBUG_MODE, host=HOST, port=PORT)
+    socketio.run(app, host=HOST, port=PORT)
