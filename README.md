@@ -27,7 +27,7 @@ A config file named `pins.yml` is used to define the initial setup for pins that
 
 ------------------------------------------------------------------------------
 
-### List enabled GPIO pins and configuration
+#### List enabled GPIO pins and configuration
 
 **GET:** `/api/v1/pin`
 
@@ -51,7 +51,7 @@ A config file named `pins.yml` is used to define the initial setup for pins that
 ]
 ```
 
-### Read a pin's value (includes configuration)
+#### Read a pin's value (includes configuration)
 
 **GET:** `/api/v1/pin/:pin`
 
@@ -67,7 +67,7 @@ A config file named `pins.yml` is used to define the initial setup for pins that
 }
 ```
 
-### Write to a pin
+#### Write to a pin
 
 **PUT:** `/api/v1/pin/:pin`
 
