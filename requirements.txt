@@ -10,3 +10,8 @@ pytz==2014.3
 six==1.6.1
 wsgiref==0.1.2
 PyYAML==3.11
+Flask-SocketIO==0.3.7
+gevent==1.0.1
+gevent-socketio==0.3.6
+gevent-websocket==0.9.3
+greenlet==0.4.2
