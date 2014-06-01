@@ -26,7 +26,10 @@ class PinList(Pin):
 class PinDetail(Pin):
 
     def get(self, pin_num):
-        return {'pin': pin_num}
+        for pin in CONFIG.pins:
+            if pin_num == pin['num']:
+                return self.response(pin, 200)
+        return self.response({'message': 'Pin not found'}, 404)
 
     def put(self, pin_num):
         return {'pin': pin_num}
