@@ -12,8 +12,6 @@ class Pin(BasicResource):
         self.fields = {
             "num": fields.Integer,
             "mode": fields.String,
-            "initial": fields.String,
-            "resistor": fields.String,
             "value": fields.Integer
         }
 
