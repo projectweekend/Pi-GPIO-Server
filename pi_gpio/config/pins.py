@@ -8,7 +8,6 @@ class PinManager(BaseGPIO):
 
     def __init__(self):
         super(PinManager, self).__init__()
-        self.pins = []
         self.load_yaml()
         self.initialize_pins()
 
@@ -17,16 +16,10 @@ class PinManager(BaseGPIO):
             self.__pins = yaml.safe_load(file_data)
 
     def initialize_pins(self):
-        for pin in self.__pins:
-            initial = pin.get('initial', 'LOW')
-            resistor = pin.get('resistor', None)
-            self.setup_pin(pin['num'], pin['mode'], initial, resistor)
-            self.pins.append({
-                'num': pin['num'],
-                'mode': pin['mode'],
-                'initial': initial,
-                'resistor': resistor
-            })
+        for pin_num, pin_config in self.__pins.items():
+            initial = pin_config.get('initial', 'LOW')
+            resistor = pin_config.get('resistor', None)
+            self.setup_pin(pin_num, pin_config['mode'], initial, resistor)
 
     def setup_pin(self, num, mode, initial, resistor):
         mode = self.gpio.__getattribute__(mode)
@@ -39,20 +32,26 @@ class PinManager(BaseGPIO):
 
     def read_all(self):
         results = []
-        for pin in self.pins:
-            pin_read = pin.copy()
-            pin_read['value'] = self.gpio.input(pin['num'])
+        for pin_num, pin_config in self.__pins.items():
+            pin_read = pin_config.copy()
+            pin_read['value'] = self.gpio.input(pin_num)
             results.append(pin_read)
         return results
 
     def read(self, num):
-        for pin in self.pins:
-            if int(num) == pin['num']:
-                pin_read = pin.copy()
-                pin_read['value'] = self.gpio.input(pin['num'])
-                return pin_read
-        return None
+        pin_num = int(num)
+        try:
+            pin_read = self.__pins[pin_num].copy()
+            pin_read['value'] = self.gpio.input(pin_num)
+            return pin_read
+        except KeyError:
+            return None
 
     def update(self, num, value):
-        self.gpio.output(int(num), value)
-        self.read(int(num))
+        pin_num = int(num)
+        try:
+            self.__pins[pin_num]
+            self.gpio.output(pin_num, value)
+            return self.read(pin_num)
+        except KeyError:
+            return None
