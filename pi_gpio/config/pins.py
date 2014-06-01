@@ -9,7 +9,7 @@ class Config(BaseGPIO):
     def __init__(self):
         super(Config, self).__init__()
         self.__load_from_yaml()
-        self.__initialize_pins()
+        # self.__initialize_pins()
 
     def __load_from_yaml(self):
         with open(PINS_YML) as file_data:
