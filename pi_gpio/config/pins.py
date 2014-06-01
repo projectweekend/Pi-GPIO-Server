@@ -13,7 +13,7 @@ class PinManager(BaseGPIO):
         self.test_event()
 
     def test_event(self):
-        def test_cb():
+        def test_cb(pin_num):
             print "event detected!"
         self.gpio.add_event_detect(23, self.gpio.RISING, callback=test_cb)
 
