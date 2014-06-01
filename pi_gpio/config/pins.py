@@ -33,6 +33,9 @@ class PinSocketManager(BaseGPIO):
             print(response_data)
             self.socket_func(pin_num, response_data)
 
+        edge = self.gpio.__getattribute__(event)
+        self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
+
     def pin_response(self, num, mode, value=None):
         output = {
             'num': num,
