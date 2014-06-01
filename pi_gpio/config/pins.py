@@ -37,18 +37,22 @@ class PinManager(BaseGPIO):
     def add_event(self, num, event, bounce):
         def event_callback(pin_num):
             pin_config = self.__pins[pin_num]
-            response_data = self.pin_response(pin_num, pin_config['mode'])
+            response_data = self.pin_response(pin_num, pin_config['mode'], pin_config['event'])
             print(response_data)
             # pin_event_response(pin_num, response_data)
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
 
-    def pin_response(self, num, mode):
-        return {
+    def pin_response(self, num, mode, value=None):
+        output = {
             'num': num,
-            'mode': mode,
-            'value': self.gpio.input(num)
+            'mode': mode
         }
+        if value:
+            output['value'] = value
+        else:
+            output['value'] = self.gpio.input(num)
+        return output
 
     def read_all(self):
         results = []
