@@ -1,6 +1,6 @@
 import yaml
 from .gpio import BaseGPIO
-from pi_gpio.sockets import pin_event_response
+from pi_gpio import sockets
 
 PINS_YML = './config/pins.yml'
 
@@ -42,7 +42,7 @@ class PinManager(BaseGPIO):
                 value = 1
             response_data = self.pin_response(pin_num, pin_config['mode'], value)
             print(response_data)
-            # pin_event_response(pin_num, response_data)
+            sockets.pin_event_response(pin_num, response_data)
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
 
