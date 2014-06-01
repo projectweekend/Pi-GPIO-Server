@@ -27,7 +27,7 @@ class PinDetail(Pin):
 
     def get(self, pin_num):
         for pin in CONFIG.pins:
-            if pin_num == pin['num']:
+            if int(pin_num) == pin['num']:
                 return self.response(pin, 200)
         return self.response({'message': 'Pin not found'}, 404)
 
