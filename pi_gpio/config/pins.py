@@ -34,6 +34,7 @@ class PinManager(BaseGPIO):
         results = []
         for pin_num, pin_config in self.__pins.items():
             pin_read = pin_config.copy()
+            pin_read['num'] = pin_num
             pin_read['value'] = self.gpio.input(pin_num)
             results.append(pin_read)
         return results
@@ -42,6 +43,7 @@ class PinManager(BaseGPIO):
         pin_num = int(num)
         try:
             pin_read = self.__pins[pin_num].copy()
+            pin_read['num'] = pin_num
             pin_read['value'] = self.gpio.input(pin_num)
             return pin_read
         except KeyError:
