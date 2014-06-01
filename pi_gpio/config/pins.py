@@ -20,6 +20,8 @@ class PinManager(BaseGPIO):
             initial = pin_config.get('initial', 'LOW')
             resistor = pin_config.get('resistor', None)
             self.setup_pin(pin_num, pin_config['mode'], initial, resistor)
+            pin_config['initial'] = initial
+            pin_config['resistor'] = resistor
 
     def setup_pin(self, num, mode, initial, resistor):
         mode = self.gpio.__getattribute__(mode)
