@@ -2,3 +2,5 @@
     mode: OUT
 23:
     mode: IN
+    event: RISING
+    bounce: 200

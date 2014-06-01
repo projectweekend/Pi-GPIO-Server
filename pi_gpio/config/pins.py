@@ -10,12 +10,6 @@ class PinManager(BaseGPIO):
         super(PinManager, self).__init__()
         self.load_yaml()
         self.initialize_pins()
-        self.test_event()
-
-    def test_event(self):
-        def test_cb(pin_num):
-            print "event detected!"
-        self.gpio.add_event_detect(23, self.gpio.RISING, callback=test_cb, bouncetime=100)
 
     def load_yaml(self):
         with open(PINS_YML) as file_data:
@@ -25,7 +19,10 @@ class PinManager(BaseGPIO):
         for pin_num, pin_config in self.__pins.items():
             initial = pin_config.get('initial', 'LOW')
             resistor = pin_config.get('resistor', None)
+            event = pin_config.get('event', None)
             self.setup_pin(pin_num, pin_config['mode'], initial, resistor)
+            if event:
+                self.add_event(pin_num, event, pin_config['bounce'])
 
     def setup_pin(self, num, mode, initial, resistor):
         mode = self.gpio.__getattribute__(mode)
@@ -35,6 +32,12 @@ class PinManager(BaseGPIO):
             self.gpio.setup(num, mode, initial=initial, pull_up_down=resistor)
         else:
             self.gpio.setup(num, mode, initial=initial)
+
+    def add_event(self, num, event, bounce):
+        def event_cb(pin_num):
+            print "Event on pin {0}!".format(pin_num)
+        edge = self.gpio.__getattribute__(event)
+        self.gpio.add_event_detect(num, edge, callback=event_cb, bouncetime=bounce)
 
     def read_all(self):
         results = []
