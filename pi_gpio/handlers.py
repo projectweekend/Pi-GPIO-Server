@@ -15,6 +15,9 @@ class Pin(BasicResource):
             "value": fields.Integer
         }
 
+    def pin_not_found(self):
+        return {'message': 'Pin not found'}, 404
+
 
 class PinList(Pin):
 
@@ -26,9 +29,9 @@ class PinList(Pin):
 class PinDetail(Pin):
 
     def get(self, pin_num):
-        result = MANAGER.read(pin_num)
+        result = MANAGER.read_one(pin_num)
         if not result:
-            return {'message': 'Pin not found'}, 404
+            return self.pin_not_found()
         return self.response(result, 200)
 
     def patch(self, pin_num):
@@ -36,5 +39,5 @@ class PinDetail(Pin):
         args = self.parser.parse_args()
         result = MANAGER.update_value(pin_num, args['value'])
         if not result:
-            return {'message': 'Pin not found'}, 404
-        return self.response(MANAGER.read(pin_num), 200)
+            return self.pin_not_found()
+        return self.response(MANAGER.read_one(pin_num), 200)

@@ -40,7 +40,7 @@ class PinManager(BaseGPIO):
             })
         return results
 
-    def read(self, num):
+    def read_one(self, num):
         pin_num = int(num)
         try:
             pin_config = self.__pins[pin_num]
