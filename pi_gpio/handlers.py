@@ -25,6 +25,10 @@ class PinList(Pin):
 
 class PinDetail(Pin):
 
+    def __init__(self):
+        super(PinDetail, self).__init__()
+        self.fields['value'] = fields.Integer
+
     def get(self, pin_num):
         output = MANAGER.read(pin_num)
         if not output:
