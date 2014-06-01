@@ -1,8 +1,8 @@
 from flask.ext.restful import fields
 from meta import BasicResource
-from config.pins import Config
+from config.pins import PinManager
 
-CONFIG = Config()
+MANAGER = PinManager()
 
 
 class Pin(BasicResource):
@@ -20,13 +20,13 @@ class Pin(BasicResource):
 class PinList(Pin):
 
     def get(self):
-        return self.response(CONFIG.pins, 200)
+        return self.response(MANAGER.pins, 200)
 
 
 class PinDetail(Pin):
 
     def get(self, pin_num):
-        for pin in CONFIG.pins:
+        for pin in MANAGER.pins:
             if int(pin_num) == pin['num']:
                 return self.response(pin, 200)
         return {'message': 'Pin not found'}, 404
