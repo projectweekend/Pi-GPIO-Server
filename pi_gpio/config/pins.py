@@ -37,7 +37,9 @@ class PinManager(BaseGPIO):
     def add_event(self, num, event, bounce):
         def event_callback(pin_num):
             pin_config = self.__pins[pin_num]
-            value = self.gpio.__getattribute__(pin_config['event'])
+            value = 0
+            if pin_config['event'] == 'RISING':
+                value = 1
             response_data = self.pin_response(pin_num, pin_config['mode'], value)
             print(response_data)
             # pin_event_response(pin_num, response_data)
