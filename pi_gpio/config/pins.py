@@ -10,6 +10,12 @@ class PinManager(BaseGPIO):
         super(PinManager, self).__init__()
         self.load_yaml()
         self.initialize_pins()
+        self.test_event()
+
+    def test_event(self):
+        def test_cb():
+            print "event detected!"
+        self.gpio.add_event_detect(18, self.gpio.RISING, callback=test_cb)
 
     def load_yaml(self):
         with open(PINS_YML) as file_data:
