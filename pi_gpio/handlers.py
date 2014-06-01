@@ -1,5 +1,8 @@
 from flask.ext.restful import fields
 from meta import BasicResource
+from config.pins import Config
+
+CONFIG = Config()
 
 
 class Pin(BasicResource):
@@ -7,14 +10,17 @@ class Pin(BasicResource):
     def __init__(self):
         super(Pin, self).__init__()
         self.fields = {
-            "status": fields.String
+            "num": fields.Integer,
+            "mode": fields.String,
+            "initial": fields.String,
+            "resistor": fields.String
         }
 
 
 class PinList(Pin):
 
     def get(self):
-        return {'hello': 'world'}
+        return self.response(CONFIG.pins, 200)
 
 
 class PinDetail(Pin):
