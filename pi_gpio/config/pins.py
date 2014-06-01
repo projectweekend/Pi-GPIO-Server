@@ -8,18 +8,25 @@ class Config(BaseGPIO):
 
     def __init__(self):
         super(Config, self).__init__()
-        self.load_from_yaml()
-        # self.initialize_pins()
+        self.pins = []
+        self.load_yaml()
+        self.initialize_pins()
 
-    def load_from_yaml(self):
+    def load_yaml(self):
         with open(PINS_YML) as file_data:
-            self.pins = yaml.safe_load(file_data)
+            self.__pins = yaml.safe_load(file_data)
 
     def initialize_pins(self):
-        for pin in self.pins:
+        for pin in self.__pins:
             initial = pin.get('initial', 'LOW')
             resistor = pin.get('resistor', None)
             self.setup_pin(pin['num'], pin['mode'], initial, resistor)
+            self.pins.append({
+                'num': pin['num'],
+                'mode': pin['mode'],
+                'initial': initial,
+                'resistor': resistor
+            })
 
     def setup_pin(self, num, mode, initial, resistor):
         mode = self.gpio.__getattribute__(mode)
