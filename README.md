@@ -79,3 +79,9 @@ A config file named `pins.yml` is used to define the initial setup for pins that
     "value": 0
 }
 ```
+
+------------------------------------------------------------------------------
+
+## TODO
+
+* Add support for I2C
