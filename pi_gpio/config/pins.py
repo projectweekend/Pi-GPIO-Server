@@ -39,7 +39,7 @@ class PinManager(BaseGPIO):
             pin_config = self.__pins[pin_num]
             response_data = self.pin_response(pin_num, pin_config['mode'])
             print(response_data)
-            pin_event_response(pin_num, response_data)
+            # pin_event_response(pin_num, response_data)
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
 
