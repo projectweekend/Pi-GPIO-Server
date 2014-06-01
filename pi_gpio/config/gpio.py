@@ -7,4 +7,4 @@ GPIO.setwarnings(False)
 class BaseGPIO(object):
 
     def __init__(self):
-        self.__gpio = GPIO
+        self.gpio = GPIO
