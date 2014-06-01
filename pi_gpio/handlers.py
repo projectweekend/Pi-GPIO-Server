@@ -34,7 +34,7 @@ class PinDetail(Pin):
     def patch(self, pin_num):
         self.parser.add_argument('value', type=int)
         args = self.parser.parse_args()
-        result = MANAGER.update(pin_num, args['value'])
+        result = MANAGER.update_value(pin_num, args['value'])
         if not result:
             return {'message': 'Pin not found'}, 404
-        return self.response(result, 200)
+        return self.response(MANAGER.read(pin_num), 200)

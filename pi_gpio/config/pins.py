@@ -52,11 +52,11 @@ class PinManager(BaseGPIO):
         except KeyError:
             return None
 
-    def update(self, num, value):
+    def update_value(self, num, value):
         pin_num = int(num)
         try:
             self.__pins[pin_num]
             self.gpio.output(pin_num, value)
-            return self.read(pin_num)
+            return True
         except KeyError:
             return None
