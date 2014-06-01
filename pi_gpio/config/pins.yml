@@ -1,4 +1,4 @@
-- pin: 18
+- num: 18
   mode: OUT
-- pin: 23
+- num: 23
   mode: OUT
