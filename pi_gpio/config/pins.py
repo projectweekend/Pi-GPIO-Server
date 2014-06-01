@@ -6,10 +6,10 @@ from pi_gpio import sockets
 PINS_YML = './config/pins.yml'
 
 
-class PinManager(BaseGPIO):
+class PinRestManager(BaseGPIO):
 
     def __init__(self):
-        super(PinManager, self).__init__()
+        super(PinRestManager, self).__init__()
         self.load_yaml()
         self.initialize_pins()
 

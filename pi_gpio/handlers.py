@@ -1,8 +1,8 @@
 from flask.ext.restful import fields
 from meta import BasicResource
-from config.pins import PinManager
+from config.pins import PinRestManager
 
-MANAGER = PinManager()
+REST_MANAGER = PinRestManager()
 
 
 class Pin(BasicResource):
@@ -22,14 +22,14 @@ class Pin(BasicResource):
 class PinList(Pin):
 
     def get(self):
-        result = MANAGER.read_all()
+        result = REST_MANAGER.read_all()
         return self.response(result, 200)
 
 
 class PinDetail(Pin):
 
     def get(self, pin_num):
-        result = MANAGER.read_one(pin_num)
+        result = REST_MANAGER.read_one(pin_num)
         if not result:
             return self.pin_not_found()
         return self.response(result, 200)
@@ -37,7 +37,7 @@ class PinDetail(Pin):
     def patch(self, pin_num):
         self.parser.add_argument('value', type=int)
         args = self.parser.parse_args()
-        result = MANAGER.update_value(pin_num, args['value'])
+        result = REST_MANAGER.update_value(pin_num, args['value'])
         if not result:
             return self.pin_not_found()
-        return self.response(MANAGER.read_one(pin_num), 200)
+        return self.response(REST_MANAGER.read_one(pin_num), 200)
