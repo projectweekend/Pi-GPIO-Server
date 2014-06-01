@@ -45,8 +45,6 @@ class PinManager(BaseGPIO):
             results.append(pin_read)
         return results
 
-
-
     def read(self, num):
         for pin in self.pins:
             if int(num) == pin['num']:
@@ -54,3 +52,7 @@ class PinManager(BaseGPIO):
                 pin_read['value'] = self.gpio.input(pin['num'])
                 return pin_read
         return None
+
+    def update(self, num, value):
+        self.gpio.output(int(num), value)
+        self.read(num)
