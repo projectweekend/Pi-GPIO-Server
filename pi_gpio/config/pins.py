@@ -9,6 +9,7 @@ class PinSocketManager(BaseGPIO):
     def __init__(self, socket_func):
         super(PinSocketManager, self).__init__()
         self.socket_func = socket_func
+        self.initialize_pins()
 
     def load_yaml(self):
         with open(PINS_YML) as file_data:
