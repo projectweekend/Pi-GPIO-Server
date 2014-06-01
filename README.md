@@ -36,13 +36,13 @@ A config file named `pins.yml` is used to define the initial setup for pins that
 ```json
 [
     {
-        "pin": 1,
+        "num": 1,
         "mode": "GPIO.INPUT",
         "initial": "GPIO.HIGH",
         "resistor": "GPIO.PUD_UP"
     },
     {
-        "pin": 2,
+        "num": 2,
         "mode": "GPIO.OUTPUT",
         "initial": "GPIO.LOW",
         "resistor": "GPIO.PUD_DOWN"
@@ -59,7 +59,7 @@ A config file named `pins.yml` is used to define the initial setup for pins that
 
 ```json
 {
-    "pin": 1,
+    "num": 1,
     "mode": "GPIO.INPUT",
     "initial": "GPIO.HIGH",
     "resistor": "GPIO.PUD_UP",
