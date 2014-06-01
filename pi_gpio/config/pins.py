@@ -1,5 +1,6 @@
 import yaml
 from .gpio import BaseGPIO
+from pi_gpio.sockets import pin_event_response
 
 PINS_YML = './config/pins.yml'
 
@@ -34,30 +35,33 @@ class PinManager(BaseGPIO):
             self.gpio.setup(num, mode, initial=initial)
 
     def add_event(self, num, event, bounce):
-        def event_cb(pin_num):
-            print "Event on pin {0}!".format(pin_num)
+        def event_callback(pin_num):
+            pin_config = self.__pins[pin_num]
+            response_data = self.pin_response(pin_num, pin_config['mode'])
+            print(response_data)
+            pin_event_response(pin_num, response_data)
         edge = self.gpio.__getattribute__(event)
-        self.gpio.add_event_detect(num, edge, callback=event_cb, bouncetime=bounce)
+        self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
+
+    def pin_response(self, num, mode):
+        return {
+            'num': num,
+            'mode': mode,
+            'value': self.gpio.input(num)
+        }
 
     def read_all(self):
         results = []
         for pin_num, pin_config in self.__pins.items():
-            results.append({
-                'num': pin_num,
-                'value': self.gpio.input(pin_num),
-                'mode': pin_config['mode']
-            })
+            data = self.pin_response(pin_num, pin_config['mode'])
+            results.append(data)
         return results
 
     def read_one(self, num):
         pin_num = int(num)
         try:
             pin_config = self.__pins[pin_num]
-            return {
-                'num': pin_num,
-                'value': self.gpio.input(pin_num),
-                'mode': pin_config['mode']
-            }
+            return self.pin_response(pin_num, pin_config['mode'])
         except KeyError:
             return None
 
