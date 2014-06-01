@@ -20,8 +20,6 @@ class PinManager(BaseGPIO):
             initial = pin_config.get('initial', 'LOW')
             resistor = pin_config.get('resistor', None)
             self.setup_pin(pin_num, pin_config['mode'], initial, resistor)
-            pin_config['initial'] = initial
-            pin_config['resistor'] = resistor
 
     def setup_pin(self, num, mode, initial, resistor):
         mode = self.gpio.__getattribute__(mode)
@@ -35,19 +33,22 @@ class PinManager(BaseGPIO):
     def read_all(self):
         results = []
         for pin_num, pin_config in self.__pins.items():
-            pin_read = pin_config.copy()
-            pin_read['num'] = pin_num
-            pin_read['value'] = self.gpio.input(pin_num)
-            results.append(pin_read)
+            results.append({
+                'num': pin_num,
+                'value': self.gpio.input(pin_num),
+                'mode': pin_config['mode']
+            })
         return results
 
     def read(self, num):
         pin_num = int(num)
         try:
-            pin_read = self.__pins[pin_num].copy()
-            pin_read['num'] = pin_num
-            pin_read['value'] = self.gpio.input(pin_num)
-            return pin_read
+            pin_config = self.__pins[pin_num]
+            return {
+                'num': pin_num,
+                'value': self.gpio.input(pin_num),
+                'mode': pin_config['mode']
+            }
         except KeyError:
             return None
 
