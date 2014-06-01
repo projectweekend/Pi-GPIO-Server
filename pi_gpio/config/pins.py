@@ -55,4 +55,4 @@ class PinManager(BaseGPIO):
 
     def update(self, num, value):
         self.gpio.output(int(num), value)
-        self.read(num)
+        self.read(int(num))
