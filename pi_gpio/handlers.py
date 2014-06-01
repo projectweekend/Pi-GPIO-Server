@@ -29,7 +29,7 @@ class PinDetail(Pin):
         for pin in CONFIG.pins:
             if int(pin_num) == pin['num']:
                 return self.response(pin, 200)
-        return self.response({'message': 'Pin not found'}, 404)
+        return {'message': 'Pin not found'}, 404
 
     def put(self, pin_num):
         return {'pin': pin_num}
