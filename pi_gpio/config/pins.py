@@ -4,10 +4,10 @@ from .gpio import BaseGPIO
 PINS_YML = './config/pins.yml'
 
 
-class Config(BaseGPIO):
+class PinManager(BaseGPIO):
 
     def __init__(self):
-        super(Config, self).__init__()
+        super(PinManager, self).__init__()
         self.pins = []
         self.load_yaml()
         self.initialize_pins()
@@ -36,3 +36,11 @@ class Config(BaseGPIO):
             self.gpio.setup(num, mode, initial=initial, pull_up_down=resistor)
         else:
             self.gpio.setup(num, mode, initial=initial)
+
+    def read(self, num):
+        for pin in self.pins:
+            if int(num) == pin['num']:
+                output = pin.copy()
+                output['value'] = self.gpio.input(pin['num'])
+                return output
+        return None

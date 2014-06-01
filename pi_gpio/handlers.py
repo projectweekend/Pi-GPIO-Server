@@ -26,10 +26,10 @@ class PinList(Pin):
 class PinDetail(Pin):
 
     def get(self, pin_num):
-        for pin in MANAGER.pins:
-            if int(pin_num) == pin['num']:
-                return self.response(pin, 200)
-        return {'message': 'Pin not found'}, 404
+        output = MANAGER.read(pin_num)
+        if not output:
+            return {'message': 'Pin not found'}, 404
+        return self.response(output, 200)
 
     def put(self, pin_num):
         return {'pin': pin_num}
