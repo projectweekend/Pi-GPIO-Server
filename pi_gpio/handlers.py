@@ -13,27 +13,25 @@ class Pin(BasicResource):
             "num": fields.Integer,
             "mode": fields.String,
             "initial": fields.String,
-            "resistor": fields.String
+            "resistor": fields.String,
+            "value": fields.Integer
         }
 
 
 class PinList(Pin):
 
     def get(self):
-        return self.response(MANAGER.pins, 200)
+        result = MANAGER.read_all()
+        return self.response(result, 200)
 
 
 class PinDetail(Pin):
 
-    def __init__(self):
-        super(PinDetail, self).__init__()
-        self.fields['value'] = fields.Integer
-
     def get(self, pin_num):
-        output = MANAGER.read(pin_num)
-        if not output:
+        result = MANAGER.read(pin_num)
+        if not result:
             return {'message': 'Pin not found'}, 404
-        return self.response(output, 200)
+        return self.response(result, 200)
 
     def put(self, pin_num):
         return {'pin': pin_num}

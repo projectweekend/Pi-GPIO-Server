@@ -37,10 +37,20 @@ class PinManager(BaseGPIO):
         else:
             self.gpio.setup(num, mode, initial=initial)
 
+    def read_all(self):
+        results = []
+        for pin in self.pins:
+            pin_read = pin.copy()
+            pin_read['value'] = self.gpio.input(pin['num'])
+            results.append(pin_read)
+        return results
+
+
+
     def read(self, num):
         for pin in self.pins:
             if int(num) == pin['num']:
-                output = pin.copy()
-                output['value'] = self.gpio.input(pin['num'])
-                return output
+                pin_read = pin.copy()
+                pin_read['value'] = self.gpio.input(pin['num'])
+                return pin_read
         return None
