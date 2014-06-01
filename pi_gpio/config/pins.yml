@@ -1,0 +1,4 @@
+- pin: 18
+  mode: OUT
+- pin: 23
+  mode: OUT
