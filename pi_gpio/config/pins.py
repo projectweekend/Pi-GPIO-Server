@@ -1,7 +1,6 @@
 import yaml
 from flask import copy_current_request_context
 from .gpio import BaseGPIO
-from pi_gpio.sockets import pin_event_response
 
 
 PINS_YML = './config/pins.yml'
@@ -77,8 +76,9 @@ class PinHttpManager(PinManager):
 
 class PinSocketManager(PinManager):
 
-    def __init__(self):
+    def __init__(self, socket_response):
         super(PinSocketManager, self).__init__()
+        self.socket_response = socket_response
         self.initialize_pins()
 
     def initialize_pins(self):
@@ -95,9 +95,8 @@ class PinSocketManager(PinManager):
             value = 0
             if pin_config['event'] == 'RISING':
                 value = 1
-            response_data = self.pin_response(pin_num, pin_config['mode'], value)
-            print(response_data)
-            pin_event_response(pin_num, response_data)
+            data = self.pin_response(pin_num, pin_config['mode'], value)
+            self.socket_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
