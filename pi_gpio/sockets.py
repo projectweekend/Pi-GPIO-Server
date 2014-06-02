@@ -1,10 +1,8 @@
 from flask.ext.socketio import emit
-from flask import copy_current_request_context
-from pi_gpio import socketio
+from pi_gpio import socketio, app
 from config.pins import PinManager
 
 
-@copy_current_request_context
 def pin_event_response(pin_num, data):
     route = "pin:{0}".format(pin_num)
     emit(route, data)
@@ -32,7 +30,8 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            pin_event_response(pin_num, data)
+            with app.request_context():
+                pin_event_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
