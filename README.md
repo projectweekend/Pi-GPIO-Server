@@ -91,6 +91,10 @@ A config file `pins.yml` is used to define the initial setup for pins that will 
 
 ------------------------------------------------------------------------------
 
+#### Socket.io Events
+
+If an `event` is attached to a pin, it will push inormation to the client via socket.io when the `event` is detected. Data is be sent on a named socket indicating the pin that detected the `event`. For example, if an event was attached to pin 23, the named socket is `pin:23`.
+
 ## TODO
 
 * Add support for I2C
