@@ -1,5 +1,4 @@
-from flask.ext.socketio import emit
-from pi_gpio import socketio, app
+from pi_gpio import socketio
 from config.pins import PinManager
 
 
