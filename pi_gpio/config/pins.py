@@ -1,5 +1,5 @@
 import yaml
-from pi_gpio import app
+from pi_gpio import socketio
 from .gpio import BaseGPIO
 
 
@@ -97,7 +97,7 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            with app.test_request_context():
+            with socketio.test_request_context():
             # with app.request_context(app):
                 self.socket_response(pin_num, data)
 
