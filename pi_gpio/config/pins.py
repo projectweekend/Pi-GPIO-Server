@@ -85,6 +85,7 @@ class PinSocketManager(PinManager):
         for pin_num, pin_config in self.pins.items():
             event = pin_config.get('event', None)
             if event:
+                print("Adding event")
                 self.add_event(pin_num, event, pin_config['bounce'])
 
     def add_event(self, num, event, bounce):
