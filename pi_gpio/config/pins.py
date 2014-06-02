@@ -15,7 +15,7 @@ class PinManager(BaseGPIO):
 
     def load_yaml(self):
         with open(PINS_YML) as file_data:
-            self.__pins = yaml.safe_load(file_data)
+            self.pins = yaml.safe_load(file_data)
 
     def pin_response(self, num, mode, value=None):
         output = {
@@ -36,7 +36,7 @@ class PinHttpManager(PinManager):
         self.initialize_pins()
 
     def initialize_pins(self):
-        for pin_num, pin_config in self.__pins.items():
+        for pin_num, pin_config in self.pins.items():
             initial = pin_config.get('initial', 'LOW')
             resistor = pin_config.get('resistor', None)
             self.setup_pin(pin_num, pin_config['mode'], initial, resistor)
@@ -52,7 +52,7 @@ class PinHttpManager(PinManager):
 
     def read_all(self):
         results = []
-        for pin_num, pin_config in self.__pins.items():
+        for pin_num, pin_config in self.pins.items():
             data = self.pin_response(pin_num, pin_config['mode'])
             results.append(data)
         return results
@@ -60,7 +60,7 @@ class PinHttpManager(PinManager):
     def read_one(self, num):
         pin_num = int(num)
         try:
-            pin_config = self.__pins[pin_num]
+            pin_config = self.pins[pin_num]
             return self.pin_response(pin_num, pin_config['mode'])
         except KeyError:
             return None
@@ -68,7 +68,7 @@ class PinHttpManager(PinManager):
     def update_value(self, num, value):
         pin_num = int(num)
         try:
-            self.__pins[pin_num]
+            self.pins[pin_num]
             self.gpio.output(pin_num, value)
             return True
         except KeyError:
@@ -82,7 +82,7 @@ class PinSocketManager(PinManager):
         self.initialize_pins()
 
     def initialize_pins(self):
-        for pin_num, pin_config in self.__pins.items():
+        for pin_num, pin_config in self.pins.items():
             event = pin_config.get('event', None)
             if event:
                 self.add_event(pin_num, event, pin_config['bounce'])
@@ -91,7 +91,7 @@ class PinSocketManager(PinManager):
 
         @copy_current_request_context
         def event_callback(pin_num):
-            pin_config = self.__pins[pin_num]
+            pin_config = self.pins[pin_num]
             value = 0
             if pin_config['event'] == 'RISING':
                 value = 1
