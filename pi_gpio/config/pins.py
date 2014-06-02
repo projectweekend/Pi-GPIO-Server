@@ -96,6 +96,7 @@ class PinSocketManager(PinManager):
             if pin_config['event'] == 'RISING':
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
+            print(data)
             self.socket_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
