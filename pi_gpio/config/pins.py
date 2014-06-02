@@ -75,7 +75,7 @@ class PinHttpManager(PinManager):
             return None
 
 
-class PinSocketManager(BaseGPIO):
+class PinSocketManager(PinManager):
 
     def __init__(self):
         super(PinSocketManager, self).__init__()
