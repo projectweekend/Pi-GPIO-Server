@@ -1,4 +1,5 @@
 from flask.ext.socketio import emit
+from flask import copy_current_request_context
 from pi_gpio import socketio
 from config.pins import PinManager
 
@@ -18,6 +19,7 @@ class PinSocketManager(PinManager):
 
     def add_event(self, num, event, bounce):
 
+        @copy_current_request_context
         def event_callback(pin_num):
             pin_config = self.pins[pin_num]
             value = 0
