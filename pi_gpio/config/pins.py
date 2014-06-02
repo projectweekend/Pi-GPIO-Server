@@ -97,8 +97,8 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            with app.request_context(app):
-                self.socket_response(pin_num, data)
+            # with app.request_context(app):
+            self.socket_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
