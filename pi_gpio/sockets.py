@@ -30,8 +30,7 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            environ = app.test_request_context()
-            with app.request_context(environ):
+            with app.test_request_context():
                 pin_event_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
