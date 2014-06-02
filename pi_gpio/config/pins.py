@@ -1,6 +1,8 @@
 import yaml
+from flask import copy_current_request_context
 from .gpio import BaseGPIO
 from pi_gpio.sockets import pin_event_response
+
 
 PINS_YML = './config/pins.yml'
 
@@ -87,6 +89,7 @@ class PinSocketManager(BaseGPIO):
 
     def add_event(self, num, event, bounce):
 
+        @copy_current_request_context
         def event_callback(pin_num):
             pin_config = self.__pins[pin_num]
             value = 0
