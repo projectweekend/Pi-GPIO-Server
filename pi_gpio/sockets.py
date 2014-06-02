@@ -5,7 +5,7 @@ from config.pins import PinManager
 
 def pin_event_response(pin_num, data):
     route = "pin:{0}".format(pin_num)
-    emit(route, data)
+    socketio.emit(route, data)
 
 
 class PinSocketManager(PinManager):
@@ -30,8 +30,7 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            with app.test_request_context():
-                pin_event_response(pin_num, data)
+            pin_event_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
