@@ -1,5 +1,5 @@
 import yaml
-from flask import copy_current_request_context
+from pi_gpio import app
 from .gpio import BaseGPIO
 
 
@@ -90,7 +90,6 @@ class PinSocketManager(PinManager):
 
     def add_event(self, num, event, bounce):
 
-        @copy_current_request_context
         def event_callback(pin_num):
             pin_config = self.pins[pin_num]
             value = 0
@@ -98,7 +97,8 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            self.socket_response(pin_num, data)
+            with app.request_context():
+                self.socket_response(pin_num, data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
