@@ -3,7 +3,7 @@ from config.pins import PinManager
 
 
 def pin_event_response(pin_num, data):
-    route = "pin:{0}".format(pin_num)
+    route = "pin:{0}:event".format(pin_num)
     socketio.emit(route, data)
 
 

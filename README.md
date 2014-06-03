@@ -1,6 +1,12 @@
 This is a server that provides access to the Raspberry Pi's GPIO pins through RESTful JSON and [socket.io](http://socket.io/).
 
+------------------------------------------------------------------------------
+
 ## Getting Started
+
+------------------------------------------------------------------------------
+
+### Pin Configuration
 
 A config file `config/pins.yml` is used to define the initial setup for pins that will be accessible to the API. If a pin is not defined here it will not have a URL route in the API. For full documentation about available GPIO input pin configurations see the [documentation](http://sourceforge.net/p/raspberry-gpio-python/wiki/Examples/).
 
@@ -25,6 +31,12 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 * `resistor` - This controls the software defined pull up/pull down resistor available in the Broadcom SOC. Accepted values are: `PUD_UP`, `PUD_DOWN`. (Optional - defaults to none)
 * `event` - This can only be used in combination with a pin set to input mode (`mode: IN`). If defined, the pin will use a socket.io connection and push data to the client when an event is detected. Accepted values are: `RISING`, `FALLING`, `BOTH`.
 * `bounce` - This can be used when an `event` is defined to prevent multiple callbacks being fired accidentally. The value is the number of milliseconds to wait before detecting another `event`.
+
+### Launching the Server
+
+```
+
+```
 
 
 ------------------------------------------------------------------------------
@@ -94,6 +106,15 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ------------------------------------------------------------------------------
 
+### Socket.io
+
+------------------------------------------------------------------------------
+
+#### List enabled GPIO pins
+
+
+------------------------------------------------------------------------------
+
 ### Events
 
 ------------------------------------------------------------------------------
@@ -113,7 +134,7 @@ Each pin `event` defined in `pins.yml` will push inormation to the client via so
 
 ```javascript
 var socket = io.connect('http://your_raspberry_pi.local');
-socket.on('pin:23', function (data) {
+socket.on('pin:23:event', function (data) {
   // do something with data
   console.log(data);
 });
