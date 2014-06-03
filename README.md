@@ -1,5 +1,3 @@
-This is a server that provides access to the Raspberry Pi's GPIO pins through RESTful JSON and [socket.io](http://socket.io/).
-
 ------------------------------------------------------------------------------
 
 ### Installation & Setup
