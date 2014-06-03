@@ -56,7 +56,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 #### Read a single pin
 
-**GET:** `/api/v1/pin/:pin`
+**GET:** `/api/v1/pin/:num`
 
 **Response**
 
