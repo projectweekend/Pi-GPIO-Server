@@ -112,6 +112,71 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 #### List enabled GPIO pins
 
+**Name:** `pin:list`
+
+**Response:**
+
+```json
+[
+    {
+        "num": 1,
+        "mode": "IN",
+        "value": 0
+    },
+    {
+        "num": 2,
+        "mode": "OUT",
+        "value": 1
+    },
+    ...
+]
+```
+
+#### Read a single pin
+
+**Name:** `pin:read`
+
+**Payload:**
+
+```json
+{
+  "num": 1
+}
+```
+
+**Response:**
+
+```json
+{
+    "num": 1,
+    "mode": "IN",
+    "value": 1
+}
+```
+
+#### Write to a single pin
+
+**Name:** `pin:write`
+
+**Payload:**
+
+```json
+{
+  "num": 1,
+  "value": 0
+}
+```
+
+**Response**
+
+```json
+{
+    "num": 1,
+    "mode": "IN",
+    "value": 0
+}
+```
+
 
 ------------------------------------------------------------------------------
 
@@ -122,6 +187,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 Each pin `event` defined in `pins.yml` will push inormation to the client via socket.io. Data is sent on a named socket: `pin:event`.
 
 ##### Example Socket.io Payload
+
 ```json
 {
   "num": 23,
