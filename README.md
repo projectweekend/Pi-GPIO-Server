@@ -2,6 +2,35 @@ This is a server that provides access to the Raspberry Pi's GPIO pins through RE
 
 ------------------------------------------------------------------------------
 
+### Installation & Setup
+
+------------------------------------------------------------------------------
+
+#### Step 1: Clone this repository
+
+```
+git clone https://github.com/projectweekend/Pi-GPIO-Server.git
+```
+
+#### Step 2: Run install script
+
+From the project directory `Pi-GPIO-Server/`, run the following command:
+
+```
+./install.sh
+```
+
+**NOTE:** This step will probably take several minutes to complete. When the script starts to install [Upstart](http://upstart.ubuntu.com/), you will receive a warning message. It will prompt you to type the following message to confirm the installation: `Yes, do as I say!`. You must type it exactly.
+
+#### Step 3: Reboot
+
+```
+sudo reboot
+```
+
+
+------------------------------------------------------------------------------
+
 ### Getting Started
 
 ------------------------------------------------------------------------------
