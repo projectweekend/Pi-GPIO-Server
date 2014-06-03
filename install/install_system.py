@@ -13,7 +13,7 @@ def main():
     subprocess.call(["pip", "install", "virtualenv"])
 
     # Copy Upstart script
-    subprocess.call(["cp", "gpio-server.conf", "/etc/init"])
+    subprocess.call(["cp", "./gpio-server.conf", "/etc/init"])
 
 
 if __name__ == '__main__':
