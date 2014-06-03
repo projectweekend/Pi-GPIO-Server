@@ -95,11 +95,11 @@ A config file `pins.yml` is used to define the initial setup for pins that will 
 
 ------------------------------------------------------------------------------
 
-### Socket.io Events
+### Events
 
 ------------------------------------------------------------------------------
 
-Each pin `event` defined in `pins.yml` will push inormation to the client via socket.io. Data is be sent on a named socket corresponding to the pin where it was triggered. For example, if an event was attached to pin 23, the named socket is `pin:23`.
+Each pin `event` defined in `pins.yml` will push inormation to the client via socket.io. Data is sent on a named socket corresponding to the pin where it was triggered. For example, if an event was attached to pin 23, the named socket is `pin:23`.
 
 ##### Example Socket.io Payload
 ```json
