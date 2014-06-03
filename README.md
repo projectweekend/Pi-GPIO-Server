@@ -2,7 +2,7 @@ This is a server that provides access to the Raspberry Pi's GPIO pins through RE
 
 ------------------------------------------------------------------------------
 
-## Getting Started
+### Getting Started
 
 ------------------------------------------------------------------------------
 
