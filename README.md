@@ -26,6 +26,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 * `event` - This can only be used in combination with a pin set to input mode (`mode: IN`). If defined, the pin will use a socket.io connection and push data to the client when an event is detected. Accepted values are: `RISING`, `FALLING`, `BOTH`.
 * `bounce` - This can be used when an `event` is defined to prevent multiple callbacks being fired accidentally. The value is the number of milliseconds to wait before detecting another `event`.
 
+
 ------------------------------------------------------------------------------
 
 ### JSON API
@@ -90,6 +91,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 }
 ```
 
+
 ------------------------------------------------------------------------------
 
 ### Events
@@ -116,6 +118,7 @@ socket.on('pin:23', function (data) {
   console.log(data);
 });
 ```
+
 
 ------------------------------------------------------------------------------
 
