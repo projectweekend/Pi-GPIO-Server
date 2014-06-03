@@ -119,7 +119,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ------------------------------------------------------------------------------
 
-Each pin `event` defined in `pins.yml` will push inormation to the client via socket.io. Data is sent on a named socket corresponding to the pin where it was triggered. For example, if an event was attached to pin 23, the named socket is `pin:23`.
+Each pin `event` defined in `pins.yml` will push inormation to the client via socket.io. Data is sent on a named socket: `pin:event`.
 
 ##### Example Socket.io Payload
 ```json
@@ -134,7 +134,7 @@ Each pin `event` defined in `pins.yml` will push inormation to the client via so
 
 ```javascript
 var socket = io.connect('http://your_raspberry_pi.local');
-socket.on('pin:23:event', function (data) {
+socket.on('pin:event', function (data) {
   // do something with data
   console.log(data);
 });

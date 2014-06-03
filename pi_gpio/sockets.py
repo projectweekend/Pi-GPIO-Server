@@ -1,10 +1,20 @@
+from flask.ext.socketio import send, emit
 from pi_gpio import socketio
 from config.pins import PinManager
 
 
+@socketio.on('pin:list')
+def pin_list():
+    pass
+
+
+@socketio.on('pin:read')
+def pin_detail():
+    pass
+
+
 def pin_event_response(pin_num, data):
-    route = "pin:{0}:event".format(pin_num)
-    socketio.emit(route, data)
+    socketio.emit("pin:event", data)
 
 
 class PinSocketManager(PinManager):
@@ -36,3 +46,4 @@ class PinSocketManager(PinManager):
 
 
 PinSocketManager()
+
