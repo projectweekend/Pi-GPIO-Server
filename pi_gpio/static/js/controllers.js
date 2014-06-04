@@ -2,14 +2,14 @@
 
 /* Controllers */
 
-var aModule = angular.module( 'myApp.controllers', [] );
+var cModule = angular.module( 'myApp.controllers', [] );
 
-aModule.controller( 'AppCtrl', function ( $scope ) {
+cModule.controller( 'AppCtrl', function ( $scope ) {
 
 } );
 
 
-aModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
+cModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
 
     $scope.Pin = Pin;
     $scope.Pin.getList();
@@ -21,6 +21,6 @@ aModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
 } );
 
 
-aModule.controller( 'MyCtrl2', function ( $scope ) {
+cModule.controller( 'MyCtrl2', function ( $scope ) {
 
 });
