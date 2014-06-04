@@ -3,6 +3,11 @@ from flask.ext import restful
 from handlers import PinList, PinDetail
 
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
 api = restful.Api(app)
 
 api.add_resource(PinList, '/api/v1/pin')

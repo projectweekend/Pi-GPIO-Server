@@ -15,8 +15,3 @@ socketio = SocketIO(app)
 
 import urls
 import sockets
-
-
-@app.route("/")
-def index():
-    return render_template("index.html")
