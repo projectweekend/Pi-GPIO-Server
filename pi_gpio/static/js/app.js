@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', [
+var appModule = angular.module( 'myApp', [
   'ngRoute',
 
   'myApp.controllers',
@@ -12,8 +12,9 @@ angular.module('myApp', [
 
   // 3rd party dependencies
   'btford.socket-io'
-]).
-config(function ($routeProvider, $locationProvider) {
+] );
+
+appModule.config( function ( $routeProvider, $locationProvider ) {
   $routeProvider.
     when('/pins', {
       templateUrl: 'static/partials/pins.html',
@@ -23,5 +24,5 @@ config(function ($routeProvider, $locationProvider) {
       redirectTo: '/pins'
     });
 
-  $locationProvider.html5Mode(true);
-});
+  $locationProvider.html5Mode( true );
+} );
