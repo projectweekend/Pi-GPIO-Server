@@ -1,16 +1,9 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="page-header">
-            <h1>GPIO Pins</h1>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-md-8 pins-enabled">
-        <h2>Enabled</h2>
+        <h2>GPIO Pins Enabled</h2>
         <div class="row">
             <div ng-repeat="p in Pin.list" class="col-md-6">
-                {{ p.num }}
+                <h5>{{ p.num }}</h5>
             </div>
         </div>
     </div>
