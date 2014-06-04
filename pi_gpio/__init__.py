@@ -9,8 +9,8 @@ monkey.patch_all()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', "TEST")
-app.config['HOST'] = os.getenv('HOST', '0.0.0.0')
-app.config['PORT'] = os.getenv('PORT', 5000)
+app.host = os.getenv('HOST', '0.0.0.0')
+app.port = os.getenv('PORT', 5000)
 app.debug = False
 
 socketio = SocketIO(app)
