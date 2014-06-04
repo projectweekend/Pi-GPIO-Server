@@ -3,7 +3,18 @@
         <h2>GPIO Pins Enabled</h2>
         <div class="row">
             <div ng-repeat="p in Pin.list" class="col-md-6">
-                <h5>{{ p.num }}</h5>
+                <h4>
+                    {{ p.num }}
+                    <span class="label label-primary pull-right">{{ p.mode }}</span>
+                </h4>
+                <div class="alert alert-info">
+                    <strong ng-if="p.value == 1">ON</strong>
+                    <strong ng-if="p.value == 0">OFF</strong>
+                </div>
+                <div class="btn-toolbar">
+                    <a ng-if="p.value == 0" class="btn btn-primary">Turn ON</a>
+                    <a ng-if="p.value == 1" class="btn btn-danger">Turn OFF</a>
+                </div>
             </div>
         </div>
     </div>
