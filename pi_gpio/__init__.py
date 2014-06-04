@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask import render_template
 from flask.ext.socketio import SocketIO
 
 
@@ -14,3 +15,8 @@ socketio = SocketIO(app)
 
 import urls
 import sockets
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
