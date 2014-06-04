@@ -9,7 +9,6 @@ monkey.patch_all()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', "TEST")
-app.host = os.getenv('HOST', '0.0.0.0')
 app.port = os.getenv('PORT', 5000)
 app.debug = False
 
