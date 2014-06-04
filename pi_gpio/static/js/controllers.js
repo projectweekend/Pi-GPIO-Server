@@ -4,12 +4,12 @@
 
 var aModule = angular.module( 'myApp.controllers', [] );
 
-aModule.controller( 'AppCtrl', function ( $scope, socket ) {
+aModule.controller( 'AppCtrl', function ( $scope ) {
 
 } );
 
 
-aModule.controller( 'PinsCtrl', function ( $scope, socket, Pin ) {
+aModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
 
     $scope.Pin = Pin;
     $scope.Pin.getList();
