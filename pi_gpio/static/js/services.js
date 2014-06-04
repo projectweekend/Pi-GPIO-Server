@@ -5,6 +5,10 @@
 
 var sModule = angular.module( 'myApp.services', [] );
 
+sModule.factory( 'socket', function ( socketFactory ) {
+    return socketFactory();
+} );
+
 
 sModule.factory( 'API', function ( $http, $location, $window ) {
 
