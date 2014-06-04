@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['HOST'] = os.getenv('HOST', '0.0.0.0')
 app.config['PORT'] = os.getenv('PORT', 3000)
-app.config['DEBUG_MODE'] = os.getenv('DEBUG_MODE', True)
+app.config['DEBUG_MODE'] = os.getenv('DEBUG_MODE', False)
 
 socketio = SocketIO(app)
 
