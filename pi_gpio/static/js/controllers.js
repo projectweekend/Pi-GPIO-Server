@@ -13,6 +13,11 @@ angular.module('myApp.controllers', []).
 
     $scope.test = "TESTING!!!";
 
+    socket.emit( 'pin:list' );
+    socket.on( 'pin:list', function ( data ) {
+        $scope.socket_data = data;
+    } );
+
   }).
   controller('MyCtrl2', function ($scope) {
 
