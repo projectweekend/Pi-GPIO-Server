@@ -2,21 +2,16 @@
 
 /* Controllers */
 
-var cModule = angular.module( 'myApp.controllers', [] );
+angular.module( 'myApp.controllers', [] ).
+    controller( 'AppCtrl', function ( $scope ) {
 
-cModule.controller( 'AppCtrl', function ( $scope ) {
-
-} );
-
-
-cModule.controller( 'PinsCtrl', function ( $scope, socket ) {
+    } ).
+    controller( 'PinsCtrl', function ( $scope, socket ) {
 
     // $scope.Pin = Pin;
     // $scope.Pin.getList();
 
-} );
+    } ).
+    controller( 'MyCtrl2', function ( $scope ) {
 
-
-cModule.controller( 'MyCtrl2', function ( $scope ) {
-
-});
+    });
