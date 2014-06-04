@@ -4,9 +4,9 @@ from flask import render_template
 from handlers import PinList, PinDetail
 
 
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html')
 
 
 api = restful.Api(app)
