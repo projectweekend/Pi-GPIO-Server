@@ -2,21 +2,25 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, socket) {
+var aModule = angular.module( 'myApp.controllers', [] );
 
-  }).
-  controller('PinsCtrl', function ($scope, socket) {
+aModule.controller( 'AppCtrl', function ( $scope, socket ) {
 
-    $scope.test = "TESTING!!!";
+} );
 
-    socket.on( 'pin:list', function ( data ) {
-        $scope.socket_data = data;
-    } );
 
-    socket.emit( 'pin:list' );
+aModule.controller( 'PinsCtrl', function ( $scope, socket, Pin ) {
 
-  }).
-  controller('MyCtrl2', function ($scope) {
+    $scope.Pin = Pin;
+    $scope.Pin.getList();
 
-  });
+    // socket.on( 'pin:list', function ( data ) {
+    //     $scope.pinsEnabled = data;
+    // } );
+
+} );
+
+
+aModule.controller( 'MyCtrl2', function ( $scope ) {
+
+});
