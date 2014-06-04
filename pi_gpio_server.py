@@ -7,4 +7,4 @@ DEBUG_MODE = app.config['DEBUG']
 
 
 if __name__ == '__main__':
-    socketio.run(app, host=HOST, port=PORT)
+    socketio.run(app, host=HOST, port=PORT debug=DEBUG_MODE)
