@@ -5,6 +5,9 @@
 angular.module('myApp.controllers', []).
   controller('AppCtrl', function ($scope, socket) {
     $scope.app_test = "APP TEST";
+
+    alert("TEST");
+
   }).
   controller('PinsCtrl', function ($scope, socket) {
 
