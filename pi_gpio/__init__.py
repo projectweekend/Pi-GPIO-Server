@@ -1,6 +1,10 @@
 import os
 from flask import Flask
 from flask.ext.socketio import SocketIO
+from gevent import monkey
+
+
+monkey.patch_all()
 
 
 app = Flask(__name__)
