@@ -58,7 +58,7 @@ sModule.factory( 'API', function ( $http, $location, $window ) {
 } );
 
 
-sModule.factory( 'Pin', function ( API ) {
+sModule.factory( 'Pin', function ( API, socket ) {
 
     var url = "/api/v1/pin";
 
