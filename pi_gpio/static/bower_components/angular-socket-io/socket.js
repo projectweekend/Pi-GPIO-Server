@@ -28,7 +28,7 @@ angular.module('btford.socket-io', []).
 
       return function socketFactory (options) {
         options = options || {};
-        var socket = options.ioSocket || io.connect();
+        var socket = options.ioSocket || io.connect('http://raspberrypi.local:3000/');
         var prefix = options.prefix || defaultPrefix;
         var defaultScope = options.scope || $rootScope;
 
