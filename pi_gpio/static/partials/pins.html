@@ -3,11 +3,11 @@
         <h2>Pins Enabled</h2>
         <div class="row">
             <div ng-repeat="p in Pin.list" class="col-md-6 pin">
-                <h4>
+                <h3>
                     {{ p.num }}: {{ p.mode }}
                     <span ng-if="p.value == 1" class="label label-success pull-right">ON</span>
                     <span ng-if="p.value == 0" class="label label-danger pull-right">OFF</span>
-                </h4>
+                </h3>
                 <div class="btn-toolbar">
                     <a ng-if="p.value == 0" class="btn btn-success">Turn ON</a>
                     <a ng-if="p.value == 1" class="btn btn-danger">Turn OFF</a>
