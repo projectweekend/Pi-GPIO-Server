@@ -4,8 +4,8 @@
         <div class="row">
             <div ng-repeat="p in Pin.list" class="col-md-6">
                 <h4>
-                    {{ p.num }}
-                    <span class="label label-primary pull-right">{{ p.mode }}</span>
+                    {{ p.num }}:
+                    <span class="label label-primary">{{ p.mode }}</span>
                 </h4>
                 <div class="alert alert-info">
                     <strong ng-if="p.value == 1">ON</strong>
