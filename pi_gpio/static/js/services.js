@@ -77,6 +77,28 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
                 }
                 self.list = data;
             });
+        },
+        setValue: function ( pin_num, value ) {
+            var self = this;
+            var url = url + "/" + pin_num;
+            API.patch( url, { value: value }, function ( err, data ) {
+                if ( err ) {
+                    self.error = err;
+                }
+                for ( var i = 0; i < self.list.length; i++ ) {
+                    if ( self.list[ i ].num === pin_num ) {
+                        self.list[ i ] = data;
+                    }
+                }
+            } );
+        },
+        turnOn: function ( pin_num ) {
+            var self = this;
+            this.setValue( pin_num, 1 );
+        },
+        turnOff: function ( pin_num ) {
+            var self = this;
+            this.setValue( pin_num, 0 );
         }
     };
 

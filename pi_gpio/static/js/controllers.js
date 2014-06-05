@@ -10,10 +10,10 @@ cModule.controller( 'AppCtrl', function ( $scope ) {
 } );
 
 
-cModule.controller( 'PinsCtrl', function ( $scope, socket ) {
+cModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
 
-    // $scope.Pin = Pin;
-    // $scope.Pin.getList();
+    $scope.Pin = Pin;
+    $scope.Pin.getList();
 
 } );
 
