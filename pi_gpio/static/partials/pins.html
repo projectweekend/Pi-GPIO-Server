@@ -3,14 +3,20 @@
         <h2>Pins Enabled</h2>
         <div class="row">
             <div ng-repeat="p in Pin.list" class="col-md-6 pin">
-                <h3>
-                    {{ p.num }}: {{ p.mode }}:
-                    <span ng-if="p.value == 1" class="label label-success">ON</span>
-                    <span ng-if="p.value == 0" class="label label-danger">OFF</span>
-                </h3>
-                <div class="btn-toolbar">
-                    <a ng-if="p.value == 0" class="btn btn-success">Turn ON</a>
-                    <a ng-if="p.value == 1" class="btn btn-danger">Turn OFF</a>
+                <div class="panel panel-default ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ p.num }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <span class="label label-primary">mode: </span>
+                            <span>{{ p.mode }}</span>
+                        </div>
+                        <div class="btn-toolbar">
+                            <a ng-if="p.value == 0" class="btn btn-success">Turn ON</a>
+                            <a ng-if="p.value == 1" class="btn btn-danger">Turn OFF</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
