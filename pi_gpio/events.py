@@ -15,7 +15,6 @@ class PinEventManager(PinManager):
                 self.add_event(pin_num, event, pin_config['bounce'])
 
     def add_event(self, num, event, bounce):
-
         edge = self.gpio.__getattribute__(event)
 
         def event_callback(num):
@@ -23,6 +22,8 @@ class PinEventManager(PinManager):
                 'num': num,
                 'event': event
             }
+            print(data)
             self.socketio.emit('pin:event', data)
 
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
+        print("Event added: {0}".format(num))
