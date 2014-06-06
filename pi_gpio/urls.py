@@ -15,14 +15,21 @@ event_manager = PinEventManager(socketio)
 THREAD = None
 
 
+import time
+import RPi.GPIO as GPIO
+
+def background_thread():
+    while True:
+        GPIO.wait_for_edge(23, GPIO.RISING)
+        socketio.emit('pin:event', {"message":"woohoo!"})
+        time.sleep(0.5)
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
     global THREAD
     if THREAD is None:
-        for event_func in event_manager.events:
-            t = Thread(target=event_func)
-            t.start()
-            print("Thread launched")
-    THREAD = True
+        THREAD = Thread(target=background_thread)
+        THREAD.start()
     return render_template('index.html')
