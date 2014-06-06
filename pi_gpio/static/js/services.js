@@ -74,8 +74,7 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
         },
         setValue: function ( pin_num, value ) {
             var self = this;
-            var url = url + "/" + pin_num;
-            API.put( url, { value: value }, function ( err, data ) {
+            API.patch( url + "/" + pin_num, { value: value }, function ( err, data ) {
                 if ( err ) {
                     self.error = err;
                 }
