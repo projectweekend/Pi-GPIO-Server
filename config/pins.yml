@@ -3,4 +3,4 @@
 23:
     mode: IN
     event: RISING
-    bounce: 200
+    bounce: 500
