@@ -36,5 +36,5 @@ def event_callback(num):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
-    GPIO.add_event_detect(23, GPIO.RISING, callback=event_callback)
+    GPIO.add_event_detect(23, GPIO.RISING, callback=event_callback, bouncetime=500)
     return render_template('index.html')
