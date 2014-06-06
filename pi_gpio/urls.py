@@ -36,9 +36,9 @@ def index(path):
     global EVENT_MANAGER
     if EVENT_MANAGER is None:
         EVENT_MANAGER = PinManager()
-        # for pin_num, pin_config in EVENT_MANAGER.pins.items():
-        #     bounce = pin_config['bounce']
-        #     event = pin_config.get('event', None)
+        for pin_num, pin_config in EVENT_MANAGER.pins.items():
+            bounce = pin_config['bounce']
+            event = pin_config.get('event', None)
         #     if event:
         #         edge = EDGE[event]
         #         callback = build_callback(pin_num, event, socketio)
