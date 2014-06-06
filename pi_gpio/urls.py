@@ -19,10 +19,11 @@ import time
 import RPi.GPIO as GPIO
 
 def background_thread():
+    GPIO.add_event_detect(23, GPIO.RISING)
     while True:
-        GPIO.wait_for_edge(23, GPIO.RISING)
-        socketio.emit('pin:event', {"message":"woohoo!"})
-        time.sleep(0.5)
+        if GPIO.event_detected(23):
+            socketio.emit('pin:event', {"message":"woohoo!"})
+            time.sleep(0.5)
 
 
 @app.route('/', defaults={'path': ''})
