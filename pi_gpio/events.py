@@ -1,4 +1,3 @@
-import time
 from config.pins import PinManager
 
 
@@ -6,30 +5,24 @@ class PinEventManager(PinManager):
 
     def __init__(self, socketio):
         super(PinEventManager, self).__init__()
-        self.events = []
-        self.build_events(socketio)
+        self.socketio = socketio
+        self.build_events()
 
-    def build_events(self, socketio):
+    def build_events(self):
         for pin_num, pin_config in self.pins.items():
             event = pin_config.get('event', None)
             if event:
-                self.add_event(pin_num, event, pin_config['bounce'], socketio)
+                self.add_event(pin_num, event, pin_config['bounce'])
 
-    def add_event(self, num, event, bounce, socketio):
+    def add_event(self, num, event, bounce):
 
         edge = self.gpio.__getattribute__(event)
-        gpio = self.gpio
 
-        def event_function():
-            while True:
-                gpio.wait_for_edge(num, edge)
-                print("Edge detected for pin: {0}".format(num))
-                data = {
-                    'num': num,
-                    'event': event
-                }
-                socketio.emit("pin:event", data)
-                time.sleep(bounce * 0.001)
+        def event_callback():
+            data = {
+                'num': num,
+                'event': event
+            }
+            self.socketio.emit('pin:event', data)
 
-        print("Added event for pin: {0}".format(num))
-        self.events.append(event_function)
+        self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
