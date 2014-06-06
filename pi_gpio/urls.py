@@ -38,11 +38,6 @@ def event_callback(num):
 def index(path):
     global PINS
     if PINS is None:
-        PINS = read_pin_config()
-        for pin_num, pin_config in PINS.items():
-            event = pin_config.get('event', None)
-            if event:
-                bounce = pin_config['bounce']
-                edge = EDGE[event]
-                GPIO.add_event_detect(pin_num, edge, callback=event_callback, bouncetime=bounce)
+        GPIO.add_event_detect(23, GPIO.RISING, callback=event_callback, bouncetime=200)
+        PINS = True
     return render_template('index.html')
