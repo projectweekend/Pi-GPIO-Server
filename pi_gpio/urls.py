@@ -45,12 +45,10 @@ def index(path):
     if PINS is None:
         PINS = read_pin_config()
         for pin_num, pin_config in PINS.items():
-            print(pin_num)
-            print(pin_config)
-            # bounce = pin_config['bounce']
-            # event = pin_config.get('event', None)
-        #     if event:
-        #         edge = EDGE[event]
-        #         callback = build_callback(pin_num, event, socketio)
+            event = pin_config.get('event', None)
+            if event:
+                bounce = pin_config['bounce']
+                edge = EDGE[event]
+                # callback = build_callback(pin_num, event, socketio)
         #         GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
     return render_template('index.html')
