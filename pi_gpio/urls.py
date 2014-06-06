@@ -25,16 +25,12 @@ def read_pin_config():
     return pins
 
 
-def build_callback(num, event, socketio):
-    def event_callback(num):
-        data = {
-            'num': num,
-            'event': event
-        }
-        print(data)
-        socketio.emit('pin:event', data)
-    print("Callback built for: {0}".format(num))
-    return event_callback
+def event_callback(num):
+    data = {
+        'num': num
+    }
+    socketio.emit('pin:event', data)
+    print(data)
 
 
 @app.route('/', defaults={'path': ''})
@@ -48,6 +44,5 @@ def index(path):
             if event:
                 bounce = pin_config['bounce']
                 edge = EDGE[event]
-                callback = build_callback(pin_num, event, socketio)
-                GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
+                GPIO.add_event_detect(pin_num, edge, callback=event_callback, bouncetime=bounce)
     return render_template('index.html')
