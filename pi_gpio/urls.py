@@ -12,17 +12,17 @@ api.add_resource(PinDetail, '/api/v1/pin/<string:pin_num>')
 event_manager = PinEventManager(socketio)
 
 
-THREADS = []
+THREAD = None
 
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
-    global THREADS
-    if len(THREADS) == 0:
+    global THREAD
+    if THREAD is None:
         for event_func in event_manager.events:
             t = Thread(target=event_func)
             t.start()
-            THREADS.append(t)
             print("Thread launched")
+    THREAD = True
     return render_template('index.html')
