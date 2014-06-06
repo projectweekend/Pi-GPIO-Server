@@ -24,4 +24,5 @@ def index(path):
             t = Thread(target=event_func)
             t.start()
             THREADS.append(t)
+            print("Thread launched")
     return render_template('index.html')

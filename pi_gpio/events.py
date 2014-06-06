@@ -17,10 +17,13 @@ class PinEventManager(PinManager):
 
     def add_event(self, num, event, bounce, socketio):
 
+        edge = self.gpio.__getattribute__(event)
+        gpio = self.gpio
+
         def event_function():
-            edge = self.gpio.__getattribute__(event)
             while True:
-                self.gpio.wait_for_edge(num, edge)
+                gpio.wait_for_edge(num, edge)
+                print("Edge detected for pin: {0}".format(num))
                 data = {
                     'num': num,
                     'event': event
