@@ -3,13 +3,11 @@ from threading import Thread
 from flask.ext import restful
 from flask import render_template
 from handlers import PinList, PinDetail
-from events import PinEventManager
 
 
 api = restful.Api(app)
 api.add_resource(PinList, '/api/v1/pin')
 api.add_resource(PinDetail, '/api/v1/pin/<string:pin_num>')
-event_manager = PinEventManager(socketio)
 
 
 THREAD = None
