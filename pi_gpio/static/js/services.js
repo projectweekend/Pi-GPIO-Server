@@ -94,7 +94,7 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
             var self = this;
             this.setValue( pin_num, 0 );
         },
-        listenForEvents: function ( inputParams ) {
+        listenForEvents: function () {
             var self = this;
             socket.on( "pin:event", function ( data ) {
                 self.events.push( data );
