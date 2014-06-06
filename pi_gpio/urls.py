@@ -4,7 +4,6 @@ from flask.ext import restful
 from flask import render_template
 import RPi.GPIO as GPIO
 from handlers import PinList, PinDetail
-from config.pins import PinManager
 
 
 api = restful.Api(app)
@@ -49,6 +48,6 @@ def index(path):
             if event:
                 bounce = pin_config['bounce']
                 edge = EDGE[event]
-                # callback = build_callback(pin_num, event, socketio)
-        #         GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
+                callback = build_callback(pin_num, event, socketio)
+                GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
     return render_template('index.html')
