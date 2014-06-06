@@ -10,8 +10,13 @@ api.add_resource(PinList, '/api/v1/pin')
 api.add_resource(PinDetail, '/api/v1/pin/<string:pin_num>')
 
 
+EVENT_MANAGER = None
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
-    PinEventManager(socketio)
+    global EVENT_MANAGER
+    if EVENT_MANAGER is None:
+        EVENT_MANAGER = PinEventManager(socketio)
     return render_template('index.html')
