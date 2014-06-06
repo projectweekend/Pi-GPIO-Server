@@ -3,7 +3,7 @@ from flask.ext import restful
 from flask import render_template
 import RPi.GPIO as GPIO
 from handlers import PinList, PinDetail
-from events import PinEventManager
+from config.pins import PinManager
 
 
 api = restful.Api(app)
@@ -18,17 +18,29 @@ EDGE = {
 EVENT_MANAGER = None
 
 
+def build_callback(num, event, socketio):
+    def event_callback(num):
+        data = {
+            'num': num,
+            'event': event
+        }
+        print(data)
+        socketio.emit('pin:event', data)
+    print("Callback built for: {0}".format(num))
+    return event_callback
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
     global EVENT_MANAGER
     if EVENT_MANAGER is None:
-        EVENT_MANAGER = PinEventManager(socketio)
+        EVENT_MANAGER = PinManager()
         for pin_num, pin_config in EVENT_MANAGER.pins.items():
             bounce = pin_config['bounce']
             event = pin_config.get('event', None)
             if event:
                 edge = EDGE[event]
-                callback = EVENT_MANAGER.build_callback(pin_num, event, bounce)
+                callback = build_callback(pin_num, event, socketio)
                 GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
     return render_template('index.html')
