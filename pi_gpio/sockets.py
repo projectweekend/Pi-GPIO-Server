@@ -4,6 +4,8 @@ from config.pins import PinManager
 
 
 def pin_event_response(pin_num, data):
+    print("Socket event fired")
+    print(data)
     socketio.emit("pin:event", data)
 
 
