@@ -28,4 +28,5 @@ class PinEventManager(PinManager):
                 socketio.emit("pin:event", data)
                 time.sleep(bounce * 0.001)
 
+        print("Added event for pin: {0}".format(num))
         self.events.append(event_function)
