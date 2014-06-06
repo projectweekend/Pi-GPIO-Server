@@ -3,12 +3,6 @@ from pi_gpio import socketio
 from config.pins import PinManager
 
 
-def pin_event_response(pin_num, data):
-    print("Socket event fired")
-    print(data)
-    socketio.emit("pin:event", data)
-
-
 class PinSocketManager(PinManager):
 
     def __init__(self):
@@ -31,7 +25,7 @@ class PinSocketManager(PinManager):
                 value = 1
             data = self.pin_response(pin_num, pin_config['mode'], value)
             print(data)
-            pin_event_response(pin_num, data)
+            socketio.emit("pin:event", data)
 
         edge = self.gpio.__getattribute__(event)
         self.gpio.add_event_detect(num, edge, callback=event_callback, bouncetime=bounce)
