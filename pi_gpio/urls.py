@@ -18,9 +18,7 @@ def background_thread():
     while True:
         time.sleep(5)
         count += 1
-        socketio.emit('test',
-                      {'data': 'Server generated event', 'count': count},
-                      namespace='/test')
+        socketio.emit('test', {'data': 'Server generated event', 'count': count})
 
 
 @app.route('/', defaults={'path': ''})
