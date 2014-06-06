@@ -10,7 +10,11 @@ api = restful.Api(app)
 api.add_resource(PinList, '/api/v1/pin')
 api.add_resource(PinDetail, '/api/v1/pin/<string:pin_num>')
 
-
+EDGE = {
+    'RISING': GPIO.RISING,
+    'FALLING': GPIO.FALLING,
+    'BOTH': GPIO.BOTH
+}
 EVENT_MANAGER = None
 
 
@@ -24,7 +28,7 @@ def index(path):
             bounce = pin_config['bounce']
             event = pin_config.get('event', None)
             if event:
-                edge = EVENT_MANAGER.gpio.__getattribute__(event)
+                edge = EDGE[event]
                 callback = EVENT_MANAGER.build_callback(pin_num, event, bounce)
                 GPIO.add_event_detect(pin_num, edge, callback=callback, bouncetime=bounce)
     return render_template('index.html')
