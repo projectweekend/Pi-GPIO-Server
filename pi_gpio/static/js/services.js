@@ -15,7 +15,6 @@ sModule.factory( 'API', function ( $http, $location, $window ) {
     var apiRequest = function ( method, path, requestData, callback ) {
 
         var headers = {
-            "Authorization": "Bearer " + $window.sessionStorage.token,
             "Content-Type": "application/json"
         };
 
@@ -31,11 +30,6 @@ sModule.factory( 'API', function ( $http, $location, $window ) {
                 callback( null, data );
             } )
             .error( function ( data, status, headers, config ) {
-                if ( status === 401 || status === 403 ) {
-                    $window.sessionStorage.token = "";
-                    $location.path( "/login" );
-                    return;
-                }
                 callback( data, null );
             } );
     };
