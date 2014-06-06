@@ -10,7 +10,7 @@ api = restful.Api(app)
 api.add_resource(PinList, '/api/v1/pin')
 api.add_resource(PinDetail, '/api/v1/pin/<string:pin_num>')
 
-thread = None
+THREAD = None
 
 
 def background_thread():
@@ -26,7 +26,8 @@ def background_thread():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
-   if thread is None:
-        thread = Thread(target=background_thread)
-        thread.start()
+    global THREAD
+    if THREAD is None:
+        THREAD = Thread(target=background_thread)
+        THREAD.start()
     return render_template('index.html')
