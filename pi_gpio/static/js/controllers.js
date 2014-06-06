@@ -19,6 +19,8 @@ cModule.controller( 'PinsCtrl', function ( $scope, Pin, socket ) {
         console.log( data );
     } );
 
+    socket.emit( 'pin:list' );
+
 } );
 
 
