@@ -17,7 +17,7 @@ cModule.controller( 'PinsCtrl', function ( $scope, Pin, socket ) {
 
     $scope.events = [];
 
-    socket.on( 'test', function ( data ) {
+    socket.on( 'pin:event', function ( data ) {
         console.log( data );
     } );
 
