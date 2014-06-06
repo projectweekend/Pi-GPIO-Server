@@ -23,7 +23,12 @@
         <div class="page-header">
             <h2>Events</h2>
         </div>
-        <div class="row">
-        </div>
+        <ul class="list-unstyled">
+            <li ng-if="Pin.events.length > 0" ng-repeat="e in Pin.events">
+                <div class="alert alert-info">
+                    <strong>Pin: {{ e.num }}</strong>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>

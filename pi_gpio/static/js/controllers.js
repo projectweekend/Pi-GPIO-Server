@@ -14,6 +14,7 @@ cModule.controller( 'PinsCtrl', function ( $scope, Pin ) {
 
     $scope.Pin = Pin;
     $scope.Pin.getList();
+    $scope.Pin.listenForEvents();
 
 } );
 

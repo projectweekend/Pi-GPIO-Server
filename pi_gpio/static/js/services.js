@@ -62,7 +62,8 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
 
     return {
         error: {},
-        list:[],
+        list: [],
+        events: [],
         getList: function () {
             var self = this;
             API.get( url, function ( err, data ) {
@@ -92,6 +93,12 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
         turnOff: function ( pin_num ) {
             var self = this;
             this.setValue( pin_num, 0 );
+        },
+        listenForEvents: function ( inputParams ) {
+            var self = this;
+            socket.on( "pin:event", function ( data ) {
+                self.events.push( data );
+            } );
         }
     };
 
