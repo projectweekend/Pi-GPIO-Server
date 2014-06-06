@@ -18,7 +18,7 @@ class PinEventManager(PinManager):
 
         edge = self.gpio.__getattribute__(event)
 
-        def event_callback():
+        def event_callback(num):
             data = {
                 'num': num,
                 'event': event
