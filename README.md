@@ -75,14 +75,22 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 ```json
 [
     {
-        "num": 1,
-        "mode": "IN",
-        "value": 0
+        "initial": null,
+        "value": 0,
+        "resistor": null,
+        "num": 18,
+        "mode": "OUT",
+        "event": null,
+        "bounce": 0
     },
     {
-        "num": 2,
-        "mode": "OUT",
-        "value": 1
+        "initial": null,
+        "value": 0,
+        "resistor": null,
+        "num": 23,
+        "mode": "IN",
+        "event": "RISING",
+        "bounce": 200
     },
     ...
 ]
