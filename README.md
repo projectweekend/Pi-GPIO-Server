@@ -1,4 +1,4 @@
-![GPIO server page](http://i.imgur.com/ifUAwTb.png)
+![GPIO server page](http://i.imgur.com/FEOoPHj.png)
 
 
 ------------------------------------------------------------------------------
