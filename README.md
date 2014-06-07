@@ -250,3 +250,4 @@ socket.on( 'pin:event', function ( data ) {
 ------------------------------------------------------------------------------
 
 * Add support for I2C
+* Add support for SPI
