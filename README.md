@@ -124,7 +124,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 #### Write to a single pin
 
-**PUT:** `/api/v1/pin/:pin`
+**PATCH:** `/api/v1/pin/:pin`
 
 **Body**
 
@@ -164,11 +164,13 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 ~~~javascript
 var socket = io.connect( 'http://your_raspberry_pi.local' );
 
+// listen and receive data in the callback
 socket.on( 'pin:list', function ( data ) {
   // do something with data
   console.log( data );
 } );
 
+// emit 'pin:list' to trigger a response with data
 socket.emit( 'pin:list' );
 ~~~
 
@@ -181,11 +183,13 @@ socket.emit( 'pin:list' );
 ~~~javascript
 var socket = io.connect( 'http://your_raspberry_pi.local' );
 
+// listen and receive data in the callback
 socket.on( 'pin:read', function ( data ) {
   // do something with data
   console.log( data );
 } );
 
+// emit 'pin:read' to trigger a response with data
 socket.emit( 'pin:read', { num: 1 } );
 ~~~
 
@@ -198,11 +202,13 @@ socket.emit( 'pin:read', { num: 1 } );
 ~~~javascript
 var socket = io.connect( 'http://your_raspberry_pi.local' );
 
+// listen and receive data in the callback
 socket.on( 'pin:write', function ( data ) {
   // do something with data
   console.log( data );
 } );
 
+// emit 'pin:write' to update a pin and trigger a response
 socket.emit( 'pin:write', { num: 1, value: 0 } );
 ~~~
 
@@ -229,6 +235,7 @@ Each pin `event` defined in `pins.yml` will push inormation to the client via so
 ```javascript
 var socket = io.connect( 'http://your_raspberry_pi.local' );
 
+// listen and receive data in the callback
 socket.on( 'pin:event', function ( data ) {
   // do something with data
   console.log( data );
