@@ -1,3 +1,8 @@
+After installation and configuration (see below) the Raspberry Pi serves a single page demonstration app at: `http://your_raspberry_pi_hostname:5000/`.
+
+* Each pin defined as output will show up in the **controls** section with a button to toggle its state.
+* Each pin with an input event displays a message in the **events** section each time it is triggered.
+
 ![GPIO server page](http://i.imgur.com/FEOoPHj.png)
 
 
