@@ -56,7 +56,7 @@ sModule.factory( 'API', function ( $http, $location, $window ) {
 } );
 
 
-sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
+sModule.factory( 'Pin', function ( API, socket ) {
 
     var url = "/api/v1/pin";
 
@@ -95,4 +95,18 @@ sModule.factory( 'Pin', [ "API", "socket", function ( API, socket ) {
         }
     };
 
-} ] );
+} );
+
+
+sModule.factory( 'Events', function ( socket ) {
+    return {
+        error: {},
+        list: [],
+        listen: function () {
+            var self = this;
+            socket.on( 'pin:event', function ( data ) {
+                self.list.push( data );
+            } );
+        }
+    };
+} );
