@@ -15,18 +15,30 @@ class PinManager(BaseGPIO):
         with open(PINS_YML) as file_data:
             self.pins = yaml.safe_load(file_data)
 
-    def pin_response(self, num, mode):
+    def pin_response(self, num, config):
         output = {
             'num': num,
-            'mode': mode
+            'mode': config['mode'],
+            'value': self.gpio.input(num)
         }
-        output['value'] = self.gpio.input(num)
+        resistor = config.get('resistor', None)
+        if resistor:
+            output['resistor'] = resistor
+        initial = config.get('initial', None)
+        if initial:
+            output['initial'] = initial
+        event = config.get('event', None)
+        if event:
+            output['event'] = event
+        bounce = config.get('bounce', None)
+        if bounce:
+            output['bounce'] = bounce
         return output
 
     def read_all(self):
         results = []
         for pin_num, pin_config in self.pins.items():
-            data = self.pin_response(pin_num, pin_config['mode'])
+            data = self.pin_response(pin_num, pin_config)
             results.append(data)
         return results
 
@@ -34,7 +46,7 @@ class PinManager(BaseGPIO):
         pin_num = int(num)
         try:
             pin_config = self.pins[pin_num]
-            return self.pin_response(pin_num, pin_config['mode'])
+            return self.pin_response(pin_num, pin_config)
         except KeyError:
             return None
 
