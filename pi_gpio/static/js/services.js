@@ -105,6 +105,7 @@ sModule.factory( 'Events', function ( socket ) {
         listen: function () {
             var self = this;
             socket.on( 'pin:event', function ( data ) {
+                data.date = new Date();
                 self.list.push( data );
             } );
         }
