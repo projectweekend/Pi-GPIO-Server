@@ -1,3 +1,6 @@
+![GPIO server page](http://i.imgur.com/ifUAwTb.png)
+
+
 ------------------------------------------------------------------------------
 
 ### Installation & Setup
