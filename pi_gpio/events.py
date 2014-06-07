@@ -31,4 +31,3 @@ class PinEventManager(PinManager):
                 bounce = config['bounce']
                 cb = self.build_event_callback(num, event)
                 self.gpio.add_event_detect(num, edge, callback=cb, bouncetime=bounce)
-        return True

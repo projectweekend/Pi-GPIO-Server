@@ -24,9 +24,9 @@
             <h2>Events</h2>
         </div>
         <ul class="list-unstyled">
-            <li ng-if="Pin.events.length > 0" ng-repeat="e in Pin.events">
+            <li ng-if="Events.list.length > 0" ng-repeat="e in Events.list">
                 <div class="alert alert-info">
-                    <strong>Pin: {{ e.num }}</strong>
+                    <strong>Pin: {{ e.num }}</strong> - {{ e.event }}
                 </div>
             </li>
         </ul>

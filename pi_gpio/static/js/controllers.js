@@ -10,14 +10,13 @@ cModule.controller( 'AppCtrl', function ( $scope ) {
 } );
 
 
-cModule.controller( 'PinsCtrl', function ( $scope, Pin, socket ) {
+cModule.controller( 'PinsCtrl', function ( $scope, Pin, Events, socket ) {
 
     $scope.Pin = Pin;
     $scope.Pin.getList();
 
-    socket.on( 'pin:event', function ( data ) {
-        console.log( data );
-    } );
+    $scope.Events = Events;
+    $scope.Events.listen();
 
     socket.emit( 'pin:list' );
 
