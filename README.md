@@ -47,9 +47,8 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ```yaml
 18:
-  mode: IN
+  mode: OUT
   initial: HIGH
-  resistor: PUD_UP
 23:
   mode: OUT
   initial: LOW
@@ -60,7 +59,7 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
   bounce: 200
 ```
 
-* Add a numbered element for each pin enabled
+* Add a numbered element for each pin to enabled
 * `mode` - This controls whether the pin will be used for input or output. Accepted values are: `IN`, `OUT`. (Required)
 * `initial` - This controls the starting value of the pin. Accepted values are: `LOW`, `HIGH`. (Optional - defaults to `LOW`)
 * `resistor` - This controls the software defined pull up/pull down resistor available in the Broadcom SOC. Accepted values are: `PUD_UP`, `PUD_DOWN`. (Optional - defaults to none)
