@@ -104,9 +104,13 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ```json
 {
-    "num": 1,
-    "mode": "IN",
-    "value": 1
+    "initial": null,
+    "value": 0,
+    "resistor": null,
+    "num": 18,
+    "mode": "OUT",
+    "event": null,
+    "bounce": 0
 }
 ```
 
@@ -126,9 +130,13 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ```json
 {
-    "num": 1,
-    "mode": "IN",
-    "value": 0
+    "initial": null,
+    "value": 0,
+    "resistor": null,
+    "num": 18,
+    "mode": "OUT",
+    "event": null,
+    "bounce": 0
 }
 ```
 
@@ -143,68 +151,52 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 **Name:** `pin:list`
 
-**Response:**
+**Example Client JavaScript**
 
-```json
-[
-    {
-        "num": 1,
-        "mode": "IN",
-        "value": 0
-    },
-    {
-        "num": 2,
-        "mode": "OUT",
-        "value": 1
-    },
-    ...
-]
-```
+~~~javascript
+var socket = io.connect( 'http://your_raspberry_pi.local' );
+
+socket.on( 'pin:list', function ( data ) {
+  // do something with data
+  console.log( data );
+} );
+
+socket.emit( 'pin:list' );
+~~~
 
 #### Read a single pin
 
 **Name:** `pin:read`
 
-**Payload:**
+**Example Client JavaScript**
 
-```json
-{
-  "num": 1
-}
-```
+~~~javascript
+var socket = io.connect( 'http://your_raspberry_pi.local' );
 
-**Response:**
+socket.on( 'pin:read', function ( data ) {
+  // do something with data
+  console.log( data );
+} );
 
-```json
-{
-    "num": 1,
-    "mode": "IN",
-    "value": 1
-}
-```
+socket.emit( 'pin:read', { num: 1 } );
+~~~
 
 #### Write to a single pin
 
 **Name:** `pin:write`
 
-**Payload:**
+**Example Client JavaScript**
 
-```json
-{
-  "num": 1,
-  "value": 0
-}
-```
+~~~javascript
+var socket = io.connect( 'http://your_raspberry_pi.local' );
 
-**Response**
+socket.on( 'pin:write', function ( data ) {
+  // do something with data
+  console.log( data );
+} );
 
-```json
-{
-    "num": 1,
-    "mode": "IN",
-    "value": 0
-}
-```
+socket.emit( 'pin:write', { num: 1, value: 0 } );
+~~~
 
 
 ------------------------------------------------------------------------------
@@ -220,19 +212,19 @@ Each pin `event` defined in `pins.yml` will push inormation to the client via so
 ```json
 {
   "num": 23,
-  "mode": "IN",
-  "value": 1
+  "event": "RISING"
 }
 ```
 
 ##### Example Client JavaScript
 
 ```javascript
-var socket = io.connect('http://your_raspberry_pi.local');
-socket.on('pin:event', function (data) {
+var socket = io.connect( 'http://your_raspberry_pi.local' );
+
+socket.on( 'pin:event', function ( data ) {
   // do something with data
-  console.log(data);
-});
+  console.log( data );
+} );
 ```
 
 
