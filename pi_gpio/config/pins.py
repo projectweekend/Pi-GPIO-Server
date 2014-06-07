@@ -1,5 +1,4 @@
 import yaml
-from pi_gpio import app
 from .gpio import BaseGPIO
 
 
@@ -16,15 +15,12 @@ class PinManager(BaseGPIO):
         with open(PINS_YML) as file_data:
             self.pins = yaml.safe_load(file_data)
 
-    def pin_response(self, num, mode, value=None):
+    def pin_response(self, num, mode):
         output = {
             'num': num,
             'mode': mode
         }
-        if value:
-            output['value'] = value
-        else:
-            output['value'] = self.gpio.input(num)
+        output['value'] = self.gpio.input(num)
         return output
 
     def read_all(self):
