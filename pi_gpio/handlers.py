@@ -1,7 +1,7 @@
 from flask.ext.restful import fields
 from meta import BasicResource
 from config.pins import PinHttpManager
-from pi_gpio import app
+
 
 HTTP_MANAGER = PinHttpManager()
 
