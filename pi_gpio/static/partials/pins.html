@@ -11,8 +11,8 @@
                     </div>
                     <div class="panel-body">
                         <div ng-if="p.event == null" class="btn-toolbar">
-                            <a ng-if="p.value == 0" ng-click="Pin.turnOn( p.num )" class="btn btn-block btn-success">Turn ON</a>
-                            <a ng-if="p.value == 1" ng-click="Pin.turnOff( p.num )" class="btn btn-block btn-danger">Turn OFF</a>
+                            <a ng-if="p.value == 0" ng-click="Pin.turnOn( p.num )" class="btn btn-lg btn-block btn-success">Turn ON</a>
+                            <a ng-if="p.value == 1" ng-click="Pin.turnOff( p.num )" class="btn btn-lg btn-block btn-danger">Turn OFF</a>
                         </div>
                         <div ng-if="p.event != null" class="alert alert-info">
                             <span>Listening for <strong>{{ p.event }}</strong> events</span>
