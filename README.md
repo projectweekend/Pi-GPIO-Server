@@ -77,6 +77,14 @@ Using this configuration, all you need to do is wire a 1K resistor and LED to **
 
 ![Raspberry Pi Bread Board](http://i.imgur.com/zhLKQqW.jpg)
 
+##### Important:
+
+After making any change to `config/pins.yml`, you will need to restart the GPIO server to see those changes take affect. You can do this without rebooting:
+
+```
+sudo service gpio-server restart
+```
+
 
 ------------------------------------------------------------------------------
 
@@ -259,7 +267,7 @@ socket.on( 'pin:event', function ( data ) {
 
 ------------------------------------------------------------------------------
 
-This project uses [Upstart](http://upstart.ubuntu.com/) to automatically start the GPIO web server when the Raspberry Pi boots. If you make changes to the server code in this project on your Raspberry Pi, you will need to restart the GPIO server in order for those changes to take affect. If you want to do this without rebooting, you can use the following command:
+This project uses [Upstart](http://upstart.ubuntu.com/) to automatically start the GPIO web server when the Raspberry Pi boots. If you make changes to the server code in this project on your Raspberry Pi, you will need to restart the GPIO server in order for those changes to take affect. **This also includes changes made to the `pins.yml` config file.** If you want to do this without rebooting, you can use the following command:
 
 ```
 sudo service gpio-server restart
