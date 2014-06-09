@@ -10,6 +10,7 @@ def main():
     subprocess.call(["apt-get", "-y", "--force-yes", "install", "upstart"])
     subprocess.call(["apt-get", "-y", "install", "python-dev"])
     subprocess.call(["apt-get", "-y", "install", "python-pip"])
+    subprocess.call(["apt-get", "-y", "install", "avahi-daemon"])
     subprocess.call(["pip", "install", "virtualenv"])
 
     # Copy Upstart script
