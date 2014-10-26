@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Pi GPIO Server : A server for the Raspberry Pi with access to the digital GPIO pins via RESTful JSON and Socket.io">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Pi GPIO Server</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/projectweekend/Pi-GPIO-Server">View on GitHub</a>
+
+          <h1 id="project_title">Pi GPIO Server</h1>
+          <h2 id="project_tagline">A server for the Raspberry Pi with access to the digital GPIO pins via RESTful JSON and Socket.io</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/projectweekend/Pi-GPIO-Server/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/projectweekend/Pi-GPIO-Server/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>After following the installation and configuration steps below, your Raspberry Pi will serve a single page demonstration app at: <code>http://your_raspberry_pi_hostname:5000/</code>.</p>
+
+<ul>
+<li>Each pin defined as output will show up in the <strong>controls</strong> section with a button to toggle its state.</li>
+<li>Each pin with an input event displays a message in the <strong>events</strong> section each time it is triggered.</li>
+</ul>
+
+<p><img src="http://i.imgur.com/FEOoPHj.png" alt="GPIO server page"></p>
+
+<hr>
+
+<h3>
+<a name="installation--setup" class="anchor" href="#installation--setup"><span class="octicon octicon-link"></span></a>Installation &amp; Setup</h3>
+
+<hr>
+
+<h4>
+<a name="step-1-clone-this-repository" class="anchor" href="#step-1-clone-this-repository"><span class="octicon octicon-link"></span></a>Step 1: Clone this repository</h4>
+
+<pre><code>git clone https://github.com/projectweekend/Pi-GPIO-Server.git
+</code></pre>
+
+<h4>
+<a name="step-2-run-install-script" class="anchor" href="#step-2-run-install-script"><span class="octicon octicon-link"></span></a>Step 2: Run install script</h4>
+
+<p>From the project directory <code>Pi-GPIO-Server/</code>, run the following command:</p>
+
+<pre><code>./install.sh
+</code></pre>
+
+<p><strong>NOTE:</strong> This step will probably take several minutes to complete. When the script starts to install <a href="http://upstart.ubuntu.com/">Upstart</a>, you will receive a warning message. It will prompt you to type the following message to confirm the installation: <code>Yes, do as I say!</code>. You must type it exactly.</p>
+
+<h4>
+<a name="step-3-reboot" class="anchor" href="#step-3-reboot"><span class="octicon octicon-link"></span></a>Step 3: Reboot</h4>
+
+<pre><code>sudo reboot
+</code></pre>
+
+<hr>
+
+<h3>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h3>
+
+<hr>
+
+<h4>
+<a name="pin-configuration" class="anchor" href="#pin-configuration"><span class="octicon octicon-link"></span></a>Pin Configuration</h4>
+
+<p>A config file <code>config/pins.yml</code> is used to define the initial setup for pins that will be accessible to the API. If a pin is not defined here it will not have a URL route in the API. For full documentation about available GPIO input pin configurations see the <a href="http://sourceforge.net/p/raspberry-gpio-python/wiki/Examples/">documentation</a>.</p>
+
+<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">18</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">OUT</span>
+  <span class="l-Scalar-Plain">initial</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">HIGH</span>
+<span class="l-Scalar-Plain">23</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">OUT</span>
+  <span class="l-Scalar-Plain">initial</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">LOW</span>
+  <span class="l-Scalar-Plain">resistor</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">PUD_DOWN</span>
+<span class="l-Scalar-Plain">24</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">IN</span>
+  <span class="l-Scalar-Plain">event</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">RISING</span>
+  <span class="l-Scalar-Plain">bounce</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">200</span>
+</pre></div>
+
+<ul>
+<li>Add a numbered element for each pin to enabled</li>
+<li>
+<code>mode</code> - This controls whether the pin will be used for input or output. Accepted values are: <code>IN</code>, <code>OUT</code>. (Required)</li>
+<li>
+<code>initial</code> - This controls the starting value of the pin. Accepted values are: <code>LOW</code>, <code>HIGH</code>. (Optional - defaults to <code>LOW</code>)</li>
+<li>
+<code>resistor</code> - This controls the software defined pull up/pull down resistor available in the Broadcom SOC. Accepted values are: <code>PUD_UP</code>, <code>PUD_DOWN</code>. (Optional - defaults to none)</li>
+<li>
+<code>event</code> - This can only be used in combination with a pin set to input mode (<code>mode: IN</code>). If defined, the pin will use a socket.io connection and push data to the client when an event is detected. Accepted values are: <code>RISING</code>, <code>FALLING</code>, <code>BOTH</code>.</li>
+<li>
+<code>bounce</code> - This can be used when an <code>event</code> is defined to prevent multiple callbacks being fired accidentally. The value is the number of milliseconds to wait before detecting another <code>event</code>.</li>
+</ul>
+
+<h5>
+<a name="note" class="anchor" href="#note"><span class="octicon octicon-link"></span></a>Note:</h5>
+
+<p>An example configuration file is included in this project. It defines:</p>
+
+<ul>
+<li>
+<strong>Pin 18</strong> as an output pin</li>
+<li>
+<strong>Pin 23</strong> as an input pin registered with a RISING event.</li>
+</ul>
+
+<p>Using this configuration, all you need to do is wire a 1K resistor and LED to <strong>pin 18</strong>, and an button to <strong>pin 23</strong> to start using the demonstration app immediately.</p>
+
+<p><img src="http://i.imgur.com/zhLKQqW.jpg" alt="Raspberry Pi Bread Board"></p>
+
+<h5>
+<a name="important" class="anchor" href="#important"><span class="octicon octicon-link"></span></a>Important:</h5>
+
+<p>After making any change to <code>config/pins.yml</code>, you will need to restart the GPIO server to see those changes take affect. You can do this without rebooting:</p>
+
+<pre><code>sudo service gpio-server restart
+</code></pre>
+
+<hr>
+
+<h3>
+<a name="json-api" class="anchor" href="#json-api"><span class="octicon octicon-link"></span></a>JSON API</h3>
+
+<hr>
+
+<h4>
+<a name="list-enabled-gpio-pins" class="anchor" href="#list-enabled-gpio-pins"><span class="octicon octicon-link"></span></a>List enabled GPIO pins</h4>
+
+<p><strong>GET:</strong> <code>/api/v1/pin</code></p>
+
+<p><strong>Response</strong></p>
+
+<div class="highlight highlight-json"><pre><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="nt">"initial"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"value"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"resistor"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+        <span class="nt">"mode"</span><span class="p">:</span> <span class="s2">"OUT"</span><span class="p">,</span>
+        <span class="nt">"event"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"bounce"</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="nt">"initial"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"value"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">"resistor"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nt">"num"</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+        <span class="nt">"mode"</span><span class="p">:</span> <span class="s2">"IN"</span><span class="p">,</span>
+        <span class="nt">"event"</span><span class="p">:</span> <span class="s2">"RISING"</span><span class="p">,</span>
+        <span class="nt">"bounce"</span><span class="p">:</span> <span class="mi">200</span>
+    <span class="p">},</span>
+    <span class="err">...</span>
+<span class="p">]</span>
+</pre></div>
+
+<h4>
+<a name="read-a-single-pin" class="anchor" href="#read-a-single-pin"><span class="octicon octicon-link"></span></a>Read a single pin</h4>
+
+<p><strong>GET:</strong> <code>/api/v1/pin/:num</code></p>
+
+<p><strong>Response</strong></p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"initial"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"value"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">"resistor"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="nt">"mode"</span><span class="p">:</span> <span class="s2">"OUT"</span><span class="p">,</span>
+    <span class="nt">"event"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"bounce"</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="write-to-a-single-pin" class="anchor" href="#write-to-a-single-pin"><span class="octicon octicon-link"></span></a>Write to a single pin</h4>
+
+<p><strong>PATCH:</strong> <code>/api/v1/pin/:pin</code></p>
+
+<p><strong>Body</strong></p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"value"</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><strong>Response</strong></p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"initial"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"value"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">"resistor"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"num"</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="nt">"mode"</span><span class="p">:</span> <span class="s2">"OUT"</span><span class="p">,</span>
+    <span class="nt">"event"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="nt">"bounce"</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+
+<hr>
+
+<h3>
+<a name="socketio" class="anchor" href="#socketio"><span class="octicon octicon-link"></span></a>Socket.io</h3>
+
+<hr>
+
+<h4>
+<a name="list-enabled-gpio-pins-1" class="anchor" href="#list-enabled-gpio-pins-1"><span class="octicon octicon-link"></span></a>List enabled GPIO pins</h4>
+
+<p><strong>Name:</strong> <code>pin:list</code></p>
+
+<p><strong>Example Client JavaScript</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="s1">'http://your_raspberry_pi.local'</span> <span class="p">);</span>
+
+<span class="c1">// listen and receive data in the callback</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'pin:list'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">data</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with data</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">data</span> <span class="p">);</span>
+<span class="p">}</span> <span class="p">);</span>
+
+<span class="c1">// emit 'pin:list' to trigger a response with data</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span> <span class="s1">'pin:list'</span> <span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="read-a-single-pin-1" class="anchor" href="#read-a-single-pin-1"><span class="octicon octicon-link"></span></a>Read a single pin</h4>
+
+<p><strong>Name:</strong> <code>pin:read</code></p>
+
+<p><strong>Example Client JavaScript</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="s1">'http://your_raspberry_pi.local'</span> <span class="p">);</span>
+
+<span class="c1">// listen and receive data in the callback</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'pin:read'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">data</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with data</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">data</span> <span class="p">);</span>
+<span class="p">}</span> <span class="p">);</span>
+
+<span class="c1">// emit 'pin:read' to trigger a response with data</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span> <span class="s1">'pin:read'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="write-to-a-single-pin-1" class="anchor" href="#write-to-a-single-pin-1"><span class="octicon octicon-link"></span></a>Write to a single pin</h4>
+
+<p><strong>Name:</strong> <code>pin:write</code></p>
+
+<p><strong>Example Client JavaScript</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="s1">'http://your_raspberry_pi.local'</span> <span class="p">);</span>
+
+<span class="c1">// listen and receive data in the callback</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'pin:write'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">data</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with data</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">data</span> <span class="p">);</span>
+<span class="p">}</span> <span class="p">);</span>
+
+<span class="c1">// emit 'pin:write' to update a pin and trigger a response</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span> <span class="s1">'pin:write'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">num</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<hr>
+
+<h3>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h3>
+
+<hr>
+
+<p>Each pin <code>event</code> defined in <code>pins.yml</code> will push inormation to the client via socket.io. Data is sent on a named socket: <code>pin:event</code>.</p>
+
+<h5>
+<a name="example-socketio-payload" class="anchor" href="#example-socketio-payload"><span class="octicon octicon-link"></span></a>Example Socket.io Payload</h5>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+  <span class="nt">"num"</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>
+  <span class="nt">"event"</span><span class="p">:</span> <span class="s2">"RISING"</span>
+<span class="p">}</span>
+</pre></div>
+
+<h5>
+<a name="example-client-javascript" class="anchor" href="#example-client-javascript"><span class="octicon octicon-link"></span></a>Example Client JavaScript</h5>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="s1">'http://your_raspberry_pi.local'</span> <span class="p">);</span>
+
+<span class="c1">// listen and receive data in the callback</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'pin:event'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span> <span class="nx">data</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// do something with data</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">data</span> <span class="p">);</span>
+<span class="p">}</span> <span class="p">);</span>
+</pre></div>
+
+<hr>
+
+<h3>
+<a name="upstart" class="anchor" href="#upstart"><span class="octicon octicon-link"></span></a>Upstart</h3>
+
+<hr>
+
+<p>This project uses <a href="http://upstart.ubuntu.com/">Upstart</a> to automatically start the GPIO web server when the Raspberry Pi boots. If you make changes to the server code in this project on your Raspberry Pi, you will need to restart the GPIO server in order for those changes to take affect. <strong>This also includes changes made to the <code>pins.yml</code> config file.</strong> If you want to do this without rebooting, you can use the following command:</p>
+
+<pre><code>sudo service gpio-server restart
+</code></pre>
+
+<p>If for any reason you wish to stop the GPIO server from running you can use:</p>
+
+<pre><code>sudo service gpio-server stop
+</code></pre>
+
+<p>If you want to start the GPIO server again, use:</p>
+
+<pre><code>sudo service gpio-server start
+</code></pre>
+
+<hr>
+
+<h3>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h3>
+
+<hr>
+
+<ul>
+<li>Add support for I2C</li>
+<li>Add support for SPI</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Pi GPIO Server maintained by <a href="https://github.com/projectweekend">projectweekend</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
