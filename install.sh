@@ -7,4 +7,4 @@ sudo python install/install_system.py
 python install/install_project.py
 
 # Python requirements
-. env/bin/activate && sudo pip install -r requirements.txt
+sudo pip install -r requirements.txt
