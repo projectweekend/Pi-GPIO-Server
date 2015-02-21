@@ -12,6 +12,7 @@ class Pin(BasicResource):
         super(Pin, self).__init__()
         self.fields = {
             "num": fields.Integer,
+            "name": fields.String,
             "mode": fields.String,
             "value": fields.Integer,
             "resistor": fields.String,

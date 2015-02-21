@@ -45,19 +45,23 @@ A config file `config/pins.yml` is used to define the initial setup for pins tha
 
 ```yaml
 18:
+  name: Whatever you want
   mode: OUT
   initial: HIGH
 23:
+  name: Whatever you want
   mode: OUT
   initial: LOW
   resistor: PUD_DOWN
 24:
+  name: Whatever you want
   mode: IN
   event: RISING
   bounce: 200
 ```
 
 * Add a numbered element for each pin to enabled
+* `name` - This is an optional text label you can use to identify your pins. If present, this value will be displayed on the included GPIO server page.
 * `mode` - This controls whether the pin will be used for input or output. Accepted values are: `IN`, `OUT`. (Required)
 * `initial` - This controls the starting value of the pin. Accepted values are: `LOW`, `HIGH`. (Optional - defaults to `LOW`)
 * `resistor` - This controls the software defined pull up/pull down resistor available in the Broadcom SOC. Accepted values are: `PUD_UP`, `PUD_DOWN`. (Optional - defaults to none)
@@ -102,6 +106,7 @@ sudo service gpio-server restart
         "initial": null,
         "value": 0,
         "resistor": null,
+        "name": "Whatever",
         "num": 18,
         "mode": "OUT",
         "event": null,
@@ -111,6 +116,7 @@ sudo service gpio-server restart
         "initial": null,
         "value": 0,
         "resistor": null,
+        "name": "Whatever",
         "num": 23,
         "mode": "IN",
         "event": "RISING",
@@ -131,6 +137,7 @@ sudo service gpio-server restart
     "initial": null,
     "value": 0,
     "resistor": null,
+    "name": "Whatever",
     "num": 18,
     "mode": "OUT",
     "event": null,
@@ -157,6 +164,7 @@ sudo service gpio-server restart
     "initial": null,
     "value": 0,
     "resistor": null,
+    "name": "Whatever",
     "num": 18,
     "mode": "OUT",
     "event": null,
@@ -242,6 +250,7 @@ Each pin `event` defined in `pins.yml` will push inormation to the client via so
 ```json
 {
   "num": 23,
+  "name": "Whatever",
   "event": "RISING"
 }
 ```

@@ -13,10 +13,11 @@ class PinEventManager(PinManager):
             'BOTH': self.gpio.BOTH
         }
 
-    def build_event_callback(self, num, event):
+    def build_event_callback(self, num, name, event):
         def event_callback(num):
             data = {
                 'num': num,
+                'name': name,
                 'event': event
             }
             self.socketio.emit('pin:event', data)
@@ -26,8 +27,9 @@ class PinEventManager(PinManager):
     def register_gpio_events(self):
         for num, config in self.pins.items():
             event = config.get('event', None)
+            name = config.get('name', '')
             if event:
                 edge = self.edge[event]
                 bounce = config['bounce']
-                cb = self.build_event_callback(num, event)
+                cb = self.build_event_callback(num, name, event)
                 self.gpio.add_event_detect(num, edge, callback=cb, bouncetime=bounce)

@@ -18,6 +18,7 @@ class PinManager(BaseGPIO):
     def pin_response(self, num, config):
         output = {
             'num': num,
+            'name': config.get('name', ''),
             'mode': config['mode'],
             'value': self.gpio.input(num)
         }
