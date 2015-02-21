@@ -7,7 +7,8 @@
             <div ng-repeat="p in Pin.list" class="col-md-6 pin">
                 <div ng-if="p.event == null" class="panel panel-default ">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ p.num }}: {{ p.mode }}</h3>
+                        <h3 ng-if="p.name" class="panel-title">{{ p.name }}</h3>
+                        <h3 ng-if="!p.name" class="panel-title">{{ p.num }}: {{ p.mode }}</h3>
                     </div>
                     <div class="panel-body">
                         <div ng-if="p.event == null" class="btn-toolbar">
@@ -25,7 +26,10 @@
         </div>
         <ul class="list-unstyled">
             <li ng-if="Events.list.length > 0" ng-repeat="e in Events.list">
-                <div class="alert alert-info">
+                <div ng-if="e.name" class="alert alert-info">
+                    <strong>{{ e.name }}</strong> - {{ e.event }} @ {{ e.date | date: 'mediumTime'}}
+                </div>
+                <div ng-if="!e.name" class="alert alert-info">
                     <strong>Pin: {{ e.num }}</strong> - {{ e.event }} @ {{ e.date | date: 'mediumTime'}}
                 </div>
             </li>
