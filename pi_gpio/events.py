@@ -30,6 +30,6 @@ class PinEventManager(PinManager):
             name = config.get('name', '')
             if event:
                 edge = self.edge[event]
-                bounce = config['bounce']
+                bounce = config.get('bounce', -666)
                 cb = self.build_event_callback(num, name, event)
                 self.gpio.add_event_detect(num, edge, callback=cb, bouncetime=bounce)
