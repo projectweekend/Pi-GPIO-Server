@@ -1,0 +1,11 @@
+[Unit]
+Description=Pi GPIO Server
+After=multi-user.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/Pi-GPIO-Server
+ExecStart=/usr/bin/python /home/pi/Pi-GPIO-Server/pi_gpio_server.py
+
+[Install]
+WantedBy=multi-user.target

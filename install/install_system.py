@@ -16,6 +16,9 @@ def main():
     # Copy Upstart script
     #subprocess.call(["cp", "./install/gpio-server.conf", "/etc/init"])
 
+    # Copy systemd configuration
+    subprocess.call(["cp", "./install/gpio-server.service", "/lib/systemd/system/"])
+    subprocess.call(["chmod", "644", "/lib/systemd/system/gpio-server.service"])
 
 if __name__ == '__main__':
     main()
