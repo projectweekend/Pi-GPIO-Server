@@ -1,5 +1,6 @@
 Flask==0.10.1
 Flask-RESTful==0.2.12
+Flask-Cors==3.0.2
 Jinja2==2.7.2
 MarkupSafe==0.23
 RPi.GPIO==0.5.11

@@ -1,11 +1,13 @@
 from pi_gpio import app
 from flask.ext import restful
 from flask import render_template
+from flask_cors import CORS, cross_origin
 from handlers import PinList, PinDetail
 from events import PinEventManager
 
 
 EVENT_MANAGER = None
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 api = restful.Api(app)
 api.add_resource(PinList, '/api/v1/pin')
